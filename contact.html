@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- Core Variables (Matched to index.html) --- */
+        /* --- Core Variables & Global Styles (Same as index) --- */
         :root {
             --bg-dark: #050505;
             --bg-card: #111111;
@@ -21,13 +21,11 @@
             --accent: #e50914; 
             --glass: rgba(10, 10, 10, 0.7);
             --border: rgba(255, 255, 255, 0.05);
-            --input-bg: rgba(255, 255, 255, 0.03);
         }
 
-        /* --- Global Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3, .brand { font-family: 'Poppins', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
         /* --- Navigation --- */
         nav {
@@ -36,249 +34,233 @@
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100; border-bottom: 1px solid var(--border);
         }
-        .brand { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .brand i { color: var(--accent); }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 36px; height: 36px; filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4)); }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.6rem; display: flex; align-items: baseline; }
+        .logo-daily { color: #ffffff; font-weight: 500; }
+        .logo-scenes { color: var(--accent); font-weight: 800; }
+        .logo-7 { color: transparent; -webkit-text-stroke: 1.5px var(--accent); font-weight: 800; font-style: italic; margin-left: 2px; font-size: 1.8rem; }
+        
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
-        
-        .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
-        .social-btn:hover { color: var(--accent); }
 
-        /* --- Contact Header --- */
-        .contact-hero { padding: 150px 5% 50px; text-align: center; background: radial-gradient(circle at 50% -20%, #1a0608 0%, var(--bg-dark) 60%); }
-        .contact-hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(to right, #fff, #a0a0a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
-        .contact-hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards; }
+        /* --- Contact Layout --- */
+        .contact-section {
+            padding: 150px 5% 80px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top right, #1a0507 0%, var(--bg-dark) 60%);
+        }
 
-        /* --- Contact Layout Grid --- */
         .contact-container {
-            max-width: 1200px;
-            margin: 0 auto 100px auto;
-            padding: 0 5%;
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 50px;
+            max-width: 1100px;
+            width: 100%;
+            background: linear-gradient(145deg, #121212, #0a0a0a);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         /* Left Side: Info */
-        .contact-info h2 { font-size: 2rem; margin-bottom: 20px; }
-        .contact-info p { color: var(--text-muted); margin-bottom: 40px; font-size: 1rem; }
-        
-        .info-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+        .contact-info {
+            padding: 50px;
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), transparent);
             display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .info-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
-        .info-icon {
-            width: 50px; height: 50px;
-            background: rgba(229, 9, 20, 0.1);
-            color: var(--accent);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; flex-shrink: 0;
-        }
-        .info-content h3 { font-size: 1.1rem; margin-bottom: 5px; }
-        .info-content p, .info-content a { color: var(--text-muted); font-size: 0.95rem; text-decoration: none; transition: color 0.2s ease; }
-        .info-content a:hover { color: var(--accent); }
+        .contact-info h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; }
+        .contact-info p { color: var(--text-muted); font-size: 1rem; margin-bottom: 40px; }
+        
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; color: var(--text-muted); }
+        .info-item i { width: 40px; height: 40px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--accent); font-size: 1.2rem; }
+        
+        .social-grid { display: flex; gap: 15px; margin-top: 20px; }
+        .social-grid a { width: 45px; height: 45px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 1.2rem; transition: all 0.3s; }
+        .social-grid a:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
 
         /* Right Side: Form */
-        .contact-form {
-            background: var(--bg-card);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .form-group { margin-bottom: 25px; position: relative; }
-        .form-label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 500; color: #ccc; }
-        
+        .contact-form-wrapper { padding: 50px; }
+        .form-group { margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
         .form-control {
-            width: 100%;
-            padding: 16px 20px;
-            background: var(--input-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            outline: none;
+            width: 100%; padding: 15px 20px; background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border); border-radius: 12px; color: white;
+            font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: all 0.3s;
         }
-        .form-control:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); box-shadow: 0 0 15px rgba(229, 9, 20, 0.2); }
-        .form-control::placeholder { color: #666; }
-        
+        .form-control:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         textarea.form-control { resize: vertical; min-height: 150px; }
-
-        select.form-control { appearance: none; cursor: pointer; }
-        .select-wrapper { position: relative; }
-        .select-wrapper::after {
-            content: '\f107'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-            color: var(--text-muted); pointer-events: none;
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #E50914, #ff2c37); border: none;
+            padding: 16px 30px; border-radius: 12px; color: white; font-family: 'Inter', sans-serif;
+            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s;
+            width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;
         }
+        .btn-submit:hover { box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4); transform: translateY(-2px); }
 
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #E50914, #ff2c37);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .submit-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.3); }
-        .submit-btn.success { background: linear-gradient(135deg, #00C853, #69F0AE); pointer-events: none; }
+        /* Success Message styling */
+        #result { margin-top: 15px; font-weight: 500; text-align: center; font-size: 0.9rem; }
+        .text-success { color: #00ff88; }
+        .text-error { color: #ff5252; }
 
-        /* --- Footer --- */
-        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
-
-        /* --- Animations --- */
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- Mobile Responsiveness --- */
         @media (max-width: 900px) {
-            .contact-container { grid-template-columns: 1fr; gap: 40px; }
-            .contact-form { padding: 30px 20px; }
-            .nav-link { display: none; } /* Hide text links on mobile */
+            .contact-container { grid-template-columns: 1fr; }
+            .contact-info { padding: 40px 30px; }
+            .contact-form-wrapper { padding: 40px 30px; }
         }
+        @media (max-width: 768px) { .nav-link { display: none; } }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="brand"><i class="fa-solid fa-film"></i> daily.scenes7</a>
+        <a href="index.html" class="brand">
+            <svg class="logo-icon" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="42" height="42" rx="10" fill="none" stroke="url(#logo-grad)" stroke-width="3"/>
+                <path d="M20 16 L36 25 L20 34 Z" fill="url(#logo-grad)"/>
+                <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <defs>
+                    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff2c37" />
+                        <stop offset="100%" stop-color="#E50914" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="logo-text">
+                <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
+            </div>
+        </a>
+
         <div class="nav-links">
             <a href="index.html" class="nav-link">Home</a>
             <a href="collections.html" class="nav-link">Collections</a>
-            <a href="about.html" class="nav-link">About</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
-            <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
+            <a href="contact.html" class="nav-link active">Contact</a>
         </div>
     </nav>
 
-    <section class="contact-hero">
-        <h1>Let's Connect</h1>
-        <p>Have a movie recommendation? Want me to feature a specific scene? Drop a message below.</p>
-    </section>
-
-    <main class="contact-container">
-        
-        <div class="contact-info">
-            <h2>Reach Out</h2>
-            <p>Whether you're a fellow creator, a cinema lover, or want to collaborate, my inbox is always open. I read every request!</p>
+    <section class="contact-section">
+        <div class="contact-container">
             
-            <div class="info-card">
-                <div class="info-icon"><i class="fa-brands fa-instagram"></i></div>
-                <div class="info-content">
-                    <h3>Instagram</h3>
-                    <p>DM me for quick replies</p>
-                    <a href="https://instagram.com/daily.scenes7" target="_blank">@daily.scenes7</a>
-                </div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
-                <div class="info-content">
-                    <h3>Email</h3>
-                    <p>For business & collaborations</p>
-                    <a href="mailto:yennamsiddartharushi7@gmail.com">yennamsiddartharushi7@gmail.com</a>
-                </div>
-            </div>
-            
-            <div class="info-card">
-                <div class="info-icon"><i class="fa-solid fa-clapperboard"></i></div>
-                <div class="info-content">
-                    <h3>The Rule</h3>
-                    <p style="margin-bottom: 0;">"Cinema in seconds. Feel every scene." No spoilers, just pure vibes.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-form">
-            <form id="contactForm" action="#" method="POST">
-                <div class="form-group">
-                    <label class="form-label" for="name">Your Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="email">Your Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="category">What is this regarding?</label>
-                    <div class="select-wrapper">
-                        <select id="category" name="category" class="form-control" required>
-                            <option value="" disabled selected>Select an option...</option>
-                            <option value="scene_request">🎬 Request a Movie Scene</option>
-                            <option value="collab">🤝 Collaboration / Promotion</option>
-                            <option value="feedback">💬 General Feedback</option>
-                            <option value="other">❓ Other</option>
-                        </select>
+            <div class="contact-info">
+                <div>
+                    <h1>Get in Touch</h1>
+                    <p>Want to request a specific movie scene, report a broken link, or just talk cinema? Drop us a message below.</p>
+                    
+                    <div class="info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>hello@dailyscenes7.site</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Global Cinema Network</span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="message">Your Message</label>
-                    <textarea id="message" name="message" class="form-control" placeholder="Tell me which movie scene I should post next..." required></textarea>
+                <div>
+                    <h3 style="font-size: 1rem; color: white; margin-bottom: 10px;">Follow the Curation</h3>
+                    <div class="social-grid">
+                        <a href="https://instagram.com/daily.scenes7" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <i class="fa-solid fa-paper-plane"></i> Send Message
-                </button>
-            </form>
+            <div class="contact-form-wrapper">
+                
+                <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+                    
+                    <input type="hidden" name="access_key" value="3b4bde7a-cdf7-4868-b9aa-71b081b6bed7">
+                    
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Topic</label>
+                        <select id="subject" name="subject" class="form-control" required>
+                            <option value="Scene Request">Scene Request</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Bug Report">Report a Broken Link</option>
+                            <option value="Business/Collab">Business & Collaboration</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" class="form-control" placeholder="Tell us what scene you want to see next..." required></textarea>
+                    </div>
+
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                    <button type="submit" class="btn-submit">
+                        Send Message <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+
+                    <p id="result"></p>
+                </form>
+
+            </div>
         </div>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2024 daily.scenes7 &bull; Cinema in seconds.</p>
-    </footer>
+    </section>
 
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevents the page from refreshing
-            
-            const btn = document.getElementById('submitBtn');
-            const originalText = btn.innerHTML;
-            
-            // Loading State
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
-            btn.style.opacity = '0.8';
+        const form = document.getElementById('contactForm');
+        const result = document.getElementById('result');
 
-            // Simulate form submission delay (Remove this if you use Formspree)
-            setTimeout(() => {
-                // Success State
-                btn.classList.add('success');
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Message Sent!';
-                btn.style.opacity = '1';
-                
-                // Clear the form
-                this.reset();
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+            
+            result.innerHTML = "Sending message...";
+            result.className = "text-muted";
 
-                // Reset button after 3 seconds
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    result.innerHTML = "Message sent successfully! We'll be in touch.";
+                    result.className = "text-success";
+                    form.reset();
+                } else {
+                    console.log(response);
+                    result.innerHTML = json.message;
+                    result.className = "text-error";
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                result.innerHTML = "Something went wrong. Please try again.";
+                result.className = "text-error";
+            })
+            .then(function() {
                 setTimeout(() => {
-                    btn.classList.remove('success');
-                    btn.innerHTML = originalText;
-                }, 3000);
-                
-            }, 1500);
+                    result.style.display = "none";
+                }, 5000);
+            });
         });
     </script>
 </body>
