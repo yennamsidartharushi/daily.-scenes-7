@@ -159,6 +159,7 @@
         .auth-terms { font-size: 0.75rem; color: #777; margin-bottom: 15px; margin-top: 15px; }
         .auth-terms a { color: #aaa; text-decoration: underline; transition: color 0.2s; }
         .auth-terms a:hover { color: white; }
+
         /* --- Footer Styles --- */
         footer { padding: 60px 5% 30px; background: linear-gradient(to top, #080808, var(--bg-dark)); border-top: 1px solid var(--border); color: var(--text-muted); }
         .footer-content { display: flex; justify-content: center; align-items: center; text-align: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; max-width: 1400px; margin: 0 auto 40px; }
@@ -328,7 +329,7 @@
         </div>
     </div>
 
-    <div class="auth-overlay auth-modal" id="authModal">
+    <div class="auth-overlay" id="authModal">
         <div class="auth-box">
             <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div>
             <button class="close-auth" id="closeAuthModal"><i class="fa-solid fa-xmark"></i></button>
@@ -512,14 +513,13 @@
 
         // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
         const firebaseConfig = {
-  apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
-  authDomain: "dailyscenes7.firebaseapp.com",
-  projectId: "dailyscenes7",
-  storageBucket: "dailyscenes7.firebasestorage.app",
-  messagingSenderId: "381272866401",
-  appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
-  measurementId: "G-7PYNRBP33W"
-};
+            apiKey: "YOUR_API_KEY",
+            authDomain: "dailyscenes7.firebaseapp.com",
+            projectId: "dailyscenes7",
+            storageBucket: "dailyscenes7.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         try {
             const app = initializeApp(firebaseConfig);
