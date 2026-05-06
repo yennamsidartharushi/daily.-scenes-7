@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -85,6 +85,18 @@
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
         .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
         .social-btn:hover { color: var(--accent); }
+
+        /* --- Mobile Menu Button (Hidden on Desktop) --- */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+            transition: transform 0.3s ease;
+        }
 
         /* --- Hero Section --- */
         .hero { padding: 160px 5% 60px; text-align: center; background: radial-gradient(circle at 50% -20%, #2a080a 0%, var(--bg-dark) 60%); display: flex; flex-direction: column; align-items: center; }
@@ -296,14 +308,46 @@
             font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
         }
 
-        /* Mobile */
+        /* Mobile Adjustments & Dropdown Menu */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .grid { grid-template-columns: 1fr; }
             .actions { opacity: 1; transform: translateY(0); }
             .card { aspect-ratio: 4/3; }
-            .nav-link { display: none; }
             .marquee-wrapper::before, .marquee-wrapper::after { width: 50px; } 
+            
+            /* --- Mobile Navigation Magic --- */
+            .mobile-menu-btn { display: block; } /* Show the hamburger button */
+            
+            .nav-links {
+                position: absolute;
+                top: 100%; /* Drops exactly below the navbar */
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px 0;
+                border-bottom: 1px solid var(--border);
+                gap: 15px;
+                
+                /* Start hidden */
+                opacity: 0;
+                transform: translateY(-10px);
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+            
+            /* When the 'active' class is added via JavaScript */
+            .nav-links.active {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .nav-link { display: block; width: 100%; text-align: center; padding: 10px 0; }
+            .social-btn { justify-content: center; width: 100%; padding: 10px 0; }
         }
     </style>
 </head>
@@ -333,15 +377,18 @@
             </div>
         </a>
 
-        <div class="nav-links">
+        <div class="nav-links" id="navMenu">
             <a href="index.html" class="nav-link active">Home</a>
             <a href="collections.html" class="nav-link">Collections</a>
-            <a href="about.html" class="nav-link">About</a>
             <a href="contact.html" class="nav-link">Contact</a>
             <a href="faq.html" class="nav-link">FAQ</a>
             <a href="#" class="nav-link" id="openAuthModal" style="color: white; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;">Sign In</a>
             <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
         </div>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
     </nav>
 
     <section class="hero">
@@ -407,7 +454,7 @@
     <main class="grid" id="movieGrid">
         
         <article class="card" data-genres="rom-com comedy">
-            <img src="https://i.pinimg.com/1200x/ae/be/22/aebe228d06d9f815683f4aef62354082.jpg" alt="Premalu" class="card-img">
+            <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Premalu" class="card-img">
             <div class="card-overlay">
                 <div class="tags"><span class="tag">Rom-Com</span><span class="tag">2024</span></div>
                 <h2 class="title">Premalu</h2>
@@ -419,7 +466,7 @@
         </article>
 
         <article class="card" data-genres="drama comedy">
-            <img src="https://i.pinimg.com/1200x/d1/eb/bd/d1ebbd5e5bd6507030ab732ba82a2e2c.jpg" alt="Love Today" class="card-img">
+            <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Love Today" class="card-img">
             <div class="card-overlay">
                 <div class="tags"><span class="tag">Comedy</span><span class="tag">Drama</span></div>
                 <h2 class="title">Love Today</h2>
@@ -431,70 +478,10 @@
         </article>
 
         <article class="card" data-genres="action thriller">
-            <img src="https://i.pinimg.com/1200x/33/58/a0/3358a09c927bf9c796c007926cf9a805.jpg" alt="Dragon" class="card-img">
+            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dragon" class="card-img">
             <div class="card-overlay">
                 <div class="tags"><span class="tag">Action</span><span class="tag">Thriller</span></div>
                 <h2 class="title">Dragon</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
-                </div>
-            </div>
-        </article>
-
-        <article class="card" data-genres="thriller action">
-            <img src="https://i.pinimg.com/736x/2f/40/93/2f4093107889415b6c961affa2c977e4.jpg" alt="Odela 2" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Thriller</span><span class="tag">Action</span></div>
-                <h2 class="title">Odela 2</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.ahavideo.in" target="_blank" class="btn btn-aha"><i class="fa-solid fa-play"></i> Aha</a>
-                </div>
-            </div>
-        </article>
-
-        <article class="card" data-genres="horror thriller">
-            <img src="https://24newsdaily.com/wp-content/uploads/2022/08/Masooda-Movie-OTT-Release-Date.png" alt="Masooda" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Horror</span><span class="tag">Thriller</span></div>
-                <h2 class="title">Masooda</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.ahavideo.in" target="_blank" class="btn btn-aha"><i class="fa-solid fa-play"></i> Aha</a>
-                </div>
-            </div>
-        </article>
-
-        <article class="card" data-genres="action thriller">
-            <img src="https://static.toiimg.com/thumb/imgsize-21912,msid-123831755,width-450,resizemode-4/123831755.jpg" alt="Sambavam" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Action</span><span class="tag">Thriller</span></div>
-                <h2 class="title">SAMBAVAM</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
-                </div>
-            </div>
-        </article>
-
-        <article class="card" data-genres="comedy rom-com">
-            <img src="https://content.tupaki.com/h-upload/2025/03/31/1500x900_750882-b.gif" alt="MAD" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Comedy</span><span class="tag">Rom-Com</span></div>
-                <h2 class="title">MAD</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.netflix.com" target="_blank" class="btn btn-netflix"><i class="fa-brands fa-neos"></i> Netflix</a>
-                </div>
-            </div>
-        </article>
-
-        <article class="card" data-genres="thriller action">
-            <img src="https://content.tupaki.com/en/feeds/2025/09/12/944403-kidki.webp" alt="Kishkindhapuri" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Thriller</span><span class="tag">Mystery</span></div>
-                <h2 class="title">Kishkindhapuri</h2>
                 <div class="actions">
                     <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
                     <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
@@ -573,6 +560,33 @@
                 preloader.classList.add('hidden');
                 setTimeout(() => preloader.remove(), 800);
             }, 1200);
+
+            // --- Mobile Menu Toggle Logic ---
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    
+                    // Switch between hamburger and X icon
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.classList.replace('fa-bars', 'fa-xmark');
+                    } else {
+                        icon.classList.replace('fa-xmark', 'fa-bars');
+                    }
+                });
+
+                // Close menu if user clicks a link
+                const mobileLinks = navMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
+                    });
+                });
+            }
 
             // Setup Search & Filtering
             const searchInput = document.getElementById('searchInput');
@@ -683,17 +697,15 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // 2. YOUR CONFIG (Replace with your actual keys from Firebase Console!)
-         const firebaseConfig = {
-  apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
-  authDomain: "dailyscenes7.firebaseapp.com",
-  projectId: "dailyscenes7",
-  storageBucket: "dailyscenes7.firebasestorage.app",
-  messagingSenderId: "381272866401",
-  appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
-  measurementId: "G-7PYNRBP33W"
-};
-
+        // 2. YOUR CONFIG (!!! REPLACE WITH YOUR REAL FIREBASE KEYS !!!)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "dailyscenes7.firebaseapp.com",
+            projectId: "dailyscenes7",
+            storageBucket: "dailyscenes7.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         // 3. Initialize Firebase
         try {
@@ -743,6 +755,16 @@
                     const card = document.createElement('article');
                     card.className = 'card';
                     card.setAttribute('data-genres', movie.review || ''); 
+                    
+                    // Create the platform buttons for the UI based on database truth
+                    let platformLinks = '';
+                    if(movie.platforms) {
+                        if(movie.platforms.netflix) platformLinks += `<a href="https://www.netflix.com" target="_blank" class="btn btn-netflix"><i class="fa-brands fa-neos"></i> Netflix</a>`;
+                        if(movie.platforms.prime) platformLinks += `<a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>`;
+                        if(movie.platforms.hotstar) platformLinks += `<a href="https://www.hotstar.com" target="_blank" class="btn btn-hotstar"><i class="fa-solid fa-play"></i> Hotstar</a>`;
+                        if(movie.platforms.aha) platformLinks += `<a href="https://www.aha.video" target="_blank" class="btn btn-aha"><i class="fa-solid fa-play"></i> Aha</a>`;
+                    }
+
                     card.innerHTML = `
                         <img src="${movie.poster}" class="card-img" alt="${movie.title}">
                         <div class="card-overlay">
@@ -750,6 +772,7 @@
                             <h2 class="title">${movie.title}</h2>
                             <div class="actions">
                                 <button class="btn btn-trailer" data-trailer="${movie.trailer}"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                                ${platformLinks}
                             </div>
                         </div>
                     `;
