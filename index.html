@@ -29,74 +29,31 @@
         h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
         /* --- Cinematic Preloader --- */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-dark); z-index: 9999; 
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-dark); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s ease, visibility 0.8s ease; }
         #preloader.hidden { opacity: 0; visibility: hidden; }
-        .loader-content {
-            display: flex; align-items: center; gap: 15px;
-            font-family: 'Poppins', sans-serif; font-size: 2.5rem; font-weight: 800;
-            color: var(--text-main); animation: pulseGlow 1.5s infinite alternate;
-        }
+        .loader-content { display: flex; align-items: center; gap: 15px; font-family: 'Poppins', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--text-main); animation: pulseGlow 1.5s infinite alternate; }
         .loader-content i { color: var(--accent); animation: spinFilm 2s linear infinite; }
         @keyframes pulseGlow { 0% { opacity: 0.6; text-shadow: 0 0 10px transparent; } 100% { opacity: 1; text-shadow: 0 0 25px rgba(229, 9, 20, 0.6); } }
         @keyframes spinFilm { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* --- Navigation & PREMIUM LOGO STYLING --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; border-bottom: 1px solid var(--border);
-        }
-        
-        .brand { 
-            display: flex; align-items: center; gap: 12px; 
-            text-decoration: none; transition: opacity 0.3s ease;
-        }
+        /* --- Navigation & BRANDING --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.3s ease; }
         .brand:hover { opacity: 0.9; }
-        
-        .logo-icon {
-            width: 36px; height: 36px;
-            filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4));
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
-        }
-        .brand:hover .logo-icon {
-            transform: scale(1.1) rotate(90deg);
-            filter: drop-shadow(0 6px 15px rgba(229, 9, 20, 0.8));
-        }
-
-        .logo-text {
-            font-family: 'Poppins', sans-serif; font-size: 1.6rem;
-            letter-spacing: -0.5px; display: flex; align-items: baseline;
-        }
+        .logo-icon { width: 36px; height: 36px; filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4)); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease; }
+        .brand:hover .logo-icon { transform: scale(1.1) rotate(90deg); filter: drop-shadow(0 6px 15px rgba(229, 9, 20, 0.8)); }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.6rem; letter-spacing: -0.5px; display: flex; align-items: baseline; }
         .logo-daily { color: #ffffff; font-weight: 500; }
         .logo-scenes { color: var(--accent); font-weight: 800; }
-        .logo-7 {
-            color: transparent; -webkit-text-stroke: 1.5px var(--accent);
-            font-weight: 800; font-style: italic; margin-left: 2px; font-size: 1.8rem;
-        }
-
+        .logo-7 { color: transparent; -webkit-text-stroke: 1.5px var(--accent); font-weight: 800; font-style: italic; margin-left: 2px; font-size: 1.8rem; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
         .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
         .social-btn:hover { color: var(--accent); }
-
-        /* --- Mobile Menu Button (Hidden on Desktop) --- */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 101;
-            transition: transform 0.3s ease;
-        }
+        
+        /* --- Mobile Menu Button --- */
+        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; z-index: 101; transition: transform 0.3s ease; }
 
         /* --- Hero Section --- */
         .hero { padding: 160px 5% 60px; text-align: center; background: radial-gradient(circle at 50% -20%, #2a080a 0%, var(--bg-dark) 60%); display: flex; flex-direction: column; align-items: center; }
@@ -104,23 +61,8 @@
         .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px auto; font-weight: 300; }
 
         /* --- Animated Uiverse Button --- */
-        .btn-wrapper {
-            --rad: 32px; --color-wrapper-border: #fff; --color-btn-bg: #e50914; --color-btn-text: #000;
-            --color-btn-text-shadow: #fff; --color-btn-inset-shadow: #558; --color-layer-a: #fff; --color-layer-b: #8a0000; 
-            --color-overlay-text: #000; --color-overlay-glow: #fff; --color-overlay-shadow: #0004; --color-overlay-highlight: #fff5;
-
-            position: relative; display: flex; align-items: center; justify-content: center; overflow: clip; overflow-clip-margin: 4px;
-            border: 2px solid var(--color-wrapper-border); border-radius: var(--rad);
-            font-family: "Inter", sans-serif; font-size: 1.1rem; font-weight: 800;
-            filter: saturate(0.8) brightness(1.4); cursor: pointer; text-decoration: none;
-        }
-        .gradient-btn {
-            position: relative; z-index: -1; padding: 12px 36px; border: none; border-radius: var(--rad);
-            font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: 0.15rem;
-            color: var(--color-btn-text); background-color: var(--color-btn-bg); background-size: 200% 200%;
-            box-shadow: inset 0 0 10px 9px var(--color-btn-inset-shadow); text-shadow: 0 1px 3px var(--color-btn-text-shadow);
-            cursor: pointer; mix-blend-mode: color-dodge; transition: color 0.3s ease, text-shadow 0.3s ease; text-transform: uppercase;
-        }
+        .btn-wrapper { --rad: 32px; --color-wrapper-border: #fff; --color-btn-bg: #e50914; --color-btn-text: #000; --color-btn-text-shadow: #fff; --color-btn-inset-shadow: #558; --color-layer-a: #fff; --color-layer-b: #8a0000; --color-overlay-text: #000; --color-overlay-glow: #fff; --color-overlay-shadow: #0004; --color-overlay-highlight: #fff5; position: relative; display: flex; align-items: center; justify-content: center; overflow: clip; overflow-clip-margin: 4px; border: 2px solid var(--color-wrapper-border); border-radius: var(--rad); font-family: "Inter", sans-serif; font-size: 1.1rem; font-weight: 800; filter: saturate(0.8) brightness(1.4); cursor: pointer; text-decoration: none; }
+        .gradient-btn { position: relative; z-index: -1; padding: 12px 36px; border: none; border-radius: var(--rad); font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: 0.15rem; color: var(--color-btn-text); background-color: var(--color-btn-bg); background-size: 200% 200%; box-shadow: inset 0 0 10px 9px var(--color-btn-inset-shadow); text-shadow: 0 1px 3px var(--color-btn-text-shadow); cursor: pointer; mix-blend-mode: color-dodge; transition: color 0.3s ease, text-shadow 0.3s ease; text-transform: uppercase; }
         .gradient-btn::after { content: ""; position: absolute; pointer-events: none; left: 0; top: 0; width: 100%; height: 100%; border-radius: var(--rad); background-size: 200% 200%; mix-blend-mode: difference; z-index: 1; }
         .gradient-layer { position: absolute; pointer-events: none; left: -160px; width: 500%; aspect-ratio: 1; background: radial-gradient(ellipse at 65% 180%, var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a)); mix-blend-mode: difference; animation: rotate 8s linear infinite; }
         .gradient-layer:last-child { mix-blend-mode: color-dodge; }
@@ -135,32 +77,20 @@
         @keyframes opacityPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         /* --- Perfectly Seamless Infinite Marquee --- */
-        .available-on {
-            padding: 50px 0; background: rgba(255, 255, 255, 0.01); border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border); margin-bottom: 50px; overflow: hidden; position: relative;
-        }
-        .section-label {
-            text-align: center; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 35px; font-weight: 600;
-        }
+        .available-on { padding: 50px 0; background: rgba(255, 255, 255, 0.01); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 50px; overflow: hidden; position: relative; }
+        .section-label { text-align: center; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px; font-weight: 600; }
         .marquee-wrapper { display: flex; width: 100%; overflow: hidden; position: relative; }
         .marquee-wrapper::before, .marquee-wrapper::after { content: ''; position: absolute; top: 0; width: 150px; height: 100%; z-index: 2; }
         .marquee-wrapper::before { left: 0; background: linear-gradient(to right, var(--bg-dark), transparent); }
         .marquee-wrapper::after { right: 0; background: linear-gradient(to left, var(--bg-dark), transparent); }
-        
         .marquee-track { display: flex; width: max-content; animation: scrollMarquee 25s linear infinite; }
         .marquee-track:hover { animation-play-state: paused; }
         .marquee-content { display: flex; align-items: center; gap: 80px; padding-right: 80px; }
-        
-        .brand-logo {
-            height: 40px; width: auto; max-width: 160px; object-fit: contain; cursor: pointer;
-            filter: grayscale(100%) opacity(0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .brand-logo { height: 40px; width: auto; max-width: 160px; object-fit: contain; cursor: pointer; filter: grayscale(100%) opacity(0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .brand-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.15); }
         .brand-logo.apple { height: 35px; filter: grayscale(100%) opacity(0.5) invert(1); } 
         .brand-logo.apple:hover { filter: grayscale(0%) opacity(1) invert(1); }
         .brand-logo.hotstar { height: 50px; } 
-
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- Search & Filter Bar --- */
@@ -174,10 +104,13 @@
         .filter-btn:hover { background-color: rgba(255, 255, 255, 0.1); color: var(--text-main); }
         .filter-btn.active { background-color: var(--accent); color: white; border-color: var(--accent); }
 
-        /* --- Movie Grid & Cards --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; padding: 0 5% 80px; max-width: 1400px; margin: 0 auto; }
+        /* --- Category Sections & Movie Grids --- */
+        .category-section { display: none; margin-bottom: 30px; } /* Hidden if empty */
+        .category-header { padding: 0 5%; margin: 40px auto 20px; max-width: 1400px; font-size: 1.5rem; font-family: 'Poppins', sans-serif; font-weight: 700; border-left: 5px solid var(--accent); padding-left: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; padding: 0 5% 40px; max-width: 1400px; margin: 0 auto; }
         .card { position: relative; border-radius: 16px; overflow: hidden; background-color: var(--bg-card); aspect-ratio: 16 / 9; cursor: pointer; border: 1px solid var(--border); transition: transform 0.4s ease, box-shadow 0.4s ease; }
-        .card.hidden { display: none; }
+        .card.hidden { display: none !important; }
         .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.8); z-index: 10; }
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
         .card:hover .card-img { transform: scale(1.1); }
@@ -208,107 +141,31 @@
         .close-modal { position: absolute; top: -45px; right: 0; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
 
         /* --- Premium Auth Modal --- */
-        .auth-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
-        .auth-overlay.active { opacity: 1; pointer-events: auto; }
-        
-        .auth-box {
-            background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 24px;
-            width: 90%; max-width: 420px;
-            padding: 45px 35px 35px;
-            position: relative;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            transform: scale(0.95); transition: transform 0.3s ease;
-        }
+        .auth-overlay.auth-modal { z-index: 2000; }
+        .auth-box { background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; width: 90%; max-width: 420px; padding: 45px 35px 35px; position: relative; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.8); transform: scale(0.95); transition: transform 0.3s ease; }
         .auth-overlay.active .auth-box { transform: scale(1); }
-
-        /* --- Unbreakable 3D CSS Mascot --- */
-        .auth-mascot {
-            position: absolute;
-            top: -40px;
-            left: -30px;
-            width: 85px;
-            height: 85px;
-            background: linear-gradient(135deg, #ff2c37, #b30000);
-            border-radius: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4), inset 0 5px 10px rgba(255,255,255,0.4);
-            border: 1px solid rgba(255,255,255,0.2);
-            z-index: 10;
-            transform: rotate(-10deg);
-            animation: floatMascot 4s ease-in-out infinite;
-        }
-        @keyframes floatMascot {
-            0%, 100% { transform: translateY(0) rotate(-10deg); }
-            50% { transform: translateY(-12px) rotate(-2deg); }
-        }
-
-        .close-auth {
-            position: absolute; top: 20px; right: 20px;
-            background: none; border: none; color: #888;
-            font-size: 1.2rem; cursor: pointer; transition: color 0.2s;
-        }
+        .auth-mascot { position: absolute; top: -40px; left: -30px; width: 85px; height: 85px; background: linear-gradient(135deg, #ff2c37, #b30000); border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4), inset 0 5px 10px rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.2); z-index: 10; transform: rotate(-10deg); animation: floatMascot 4s ease-in-out infinite; }
+        @keyframes floatMascot { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-12px) rotate(-2deg); } }
+        .close-auth { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
         .close-auth:hover { color: white; }
-
         .auth-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
         .auth-subtitle { font-size: 0.95rem; color: #a0a0a0; margin-bottom: 25px; line-height: 1.5; }
-
-        .auth-features {
-            text-align: left; list-style: none; margin: 0 auto 30px;
-            max-width: 90%; color: #cccccc; font-size: 0.9rem;
-        }
+        .auth-features { text-align: left; list-style: none; margin: 0 auto 30px; max-width: 90%; color: #cccccc; font-size: 0.9rem; }
         .auth-features li { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-weight: 500; }
         .auth-features i { color: #6C5CE7; font-size: 0.9rem; }
-
-        .auth-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
-        .social-auth-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 14px;
-            background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px; color: white; font-family: 'Inter', sans-serif;
-            font-size: 0.95rem; font-weight: 600; cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .social-auth-btn i { font-size: 1.1rem; }
+        .social-auth-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; color: white; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-bottom: 12px; }
         .social-auth-btn:hover { background: #25252b; border-color: rgba(255,255,255,0.1); }
-
-        .auth-terms { font-size: 0.75rem; color: #777; margin-bottom: 15px; }
+        .auth-terms { font-size: 0.75rem; color: #777; margin-bottom: 15px; margin-top: 15px; }
         .auth-terms a { color: #aaa; text-decoration: underline; transition: color 0.2s; }
         .auth-terms a:hover { color: white; }
 
-        .auth-login-link { font-size: 0.9rem; color: #aaa; }
-        .auth-login-link a { color: #6C5CE7; font-weight: 600; text-decoration: none; transition: filter 0.2s; }
-        .auth-login-link a:hover { filter: brightness(1.2); }
-
         /* --- Footer Styles --- */
-        footer {
-            padding: 60px 5% 30px;
-            background: linear-gradient(to top, #080808, var(--bg-dark));
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-        }
-        .footer-content {
-            display: flex; justify-content: center; align-items: center; text-align: center;
-            flex-wrap: wrap; gap: 30px; margin-bottom: 40px; max-width: 1400px; margin: 0 auto 40px;
-        }
+        footer { padding: 60px 5% 30px; background: linear-gradient(to top, #080808, var(--bg-dark)); border-top: 1px solid var(--border); color: var(--text-muted); }
+        .footer-content { display: flex; justify-content: center; align-items: center; text-align: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; max-width: 1400px; margin: 0 auto 40px; }
         .footer-brand p { font-size: 0.9rem; margin-top: 10px; max-width: 300px; margin-left: auto; margin-right: auto; }
-        .footer-bottom {
-            text-align: center; padding-top: 30px; border-top: 1px solid var(--border);
-            font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
-        }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Mobile Adjustments & Dropdown Menu */
+        /* --- Mobile Adjustments & Glass Menu --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .grid { grid-template-columns: 1fr; }
@@ -316,36 +173,15 @@
             .card { aspect-ratio: 4/3; }
             .marquee-wrapper::before, .marquee-wrapper::after { width: 50px; } 
             
-            /* --- Mobile Navigation Magic --- */
-            .mobile-menu-btn { display: block; } /* Show the hamburger button */
+            .mobile-menu-btn { display: block; }
             
             .nav-links {
-                position: absolute;
-                top: 100%; /* Drops exactly below the navbar */
-                left: 0;
-                width: 100%;
-                background: rgba(10, 10, 10, 0.95);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 20px 0;
-                border-bottom: 1px solid var(--border);
-                gap: 15px;
-                
-                /* Start hidden */
-                opacity: 0;
-                transform: translateY(-10px);
-                pointer-events: none;
-                transition: all 0.3s ease;
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                flex-direction: column; padding: 20px 0; border-bottom: 1px solid var(--border); gap: 15px;
+                opacity: 0; transform: translateY(-10px); pointer-events: none; transition: all 0.3s ease;
             }
-            
-            /* When the 'active' class is added via JavaScript */
-            .nav-links.active {
-                opacity: 1;
-                transform: translateY(0);
-                pointer-events: auto;
-            }
-
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
             .nav-link { display: block; width: 100%; text-align: center; padding: 10px 0; }
             .social-btn { justify-content: center; width: 100%; padding: 10px 0; }
         }
@@ -415,7 +251,6 @@
         <p class="section-label">Curating from the best platforms</p>
         <div class="marquee-wrapper">
             <div class="marquee-track">
-                
                 <div class="marquee-content">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="brand-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" alt="Prime Video" class="brand-logo">
@@ -423,7 +258,6 @@
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Ctext x='0' y='32' font-family='Arial, sans-serif' font-weight='900' font-size='38' fill='%23ff6600' letter-spacing='-2'%3Eaha%3C/text%3E%3C/svg%3E" alt="Aha Video" class="brand-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg" alt="Apple TV+" class="brand-logo apple">
                 </div>
-                
                 <div class="marquee-content" aria-hidden="true">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="brand-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" alt="Prime Video" class="brand-logo">
@@ -431,7 +265,6 @@
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Ctext x='0' y='32' font-family='Arial, sans-serif' font-weight='900' font-size='38' fill='%23ff6600' letter-spacing='-2'%3Eaha%3C/text%3E%3C/svg%3E" alt="Aha Video" class="brand-logo">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg" alt="Apple TV+" class="brand-logo apple">
                 </div>
-
             </div>
         </div>
     </section>
@@ -443,52 +276,48 @@
         </div>
         <div class="filters" id="filterContainer">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="rom-com">Rom-Com</button>
-            <button class="filter-btn" data-filter="comedy">Comedy</button>
             <button class="filter-btn" data-filter="action">Action</button>
             <button class="filter-btn" data-filter="thriller">Thriller</button>
+            <button class="filter-btn" data-filter="drama">Drama</button>
             <button class="filter-btn" data-filter="horror">Horror</button>
+            <button class="filter-btn" data-filter="comedy">Comedy</button>
+            <button class="filter-btn" data-filter="rom-com">Rom-Com</button>
         </div>
     </section>
 
-    <main class="grid" id="movieGrid">
+    <div id="all-movie-sections">
         
-        <article class="card" data-genres="rom-com comedy">
-            <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Premalu" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Rom-Com</span><span class="tag">2024</span></div>
-                <h2 class="title">Premalu</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.hotstar.com" target="_blank" class="btn btn-hotstar"><i class="fa-solid fa-play"></i> Hotstar</a>
-                </div>
-            </div>
-        </article>
+        <div class="category-section" data-category="action" id="section-action">
+            <h2 class="category-header">Action & Adventure</h2>
+            <main class="grid" id="grid-action"></main>
+        </div>
 
-        <article class="card" data-genres="drama comedy">
-            <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Love Today" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Comedy</span><span class="tag">Drama</span></div>
-                <h2 class="title">Love Today</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.netflix.com" target="_blank" class="btn btn-netflix"><i class="fa-brands fa-neos"></i> Netflix</a>
-                </div>
-            </div>
-        </article>
+        <div class="category-section" data-category="thriller" id="section-thriller">
+            <h2 class="category-header">Thriller & Suspense</h2>
+            <main class="grid" id="grid-thriller"></main>
+        </div>
 
-        <article class="card" data-genres="action thriller">
-            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dragon" class="card-img">
-            <div class="card-overlay">
-                <div class="tags"><span class="tag">Action</span><span class="tag">Thriller</span></div>
-                <h2 class="title">Dragon</h2>
-                <div class="actions">
-                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
-                </div>
-            </div>
-        </article>
-    </main>
+        <div class="category-section" data-category="drama" id="section-drama">
+            <h2 class="category-header">Drama</h2>
+            <main class="grid" id="grid-drama"></main>
+        </div>
+
+        <div class="category-section" data-category="horror" id="section-horror">
+            <h2 class="category-header">Horror</h2>
+            <main class="grid" id="grid-horror"></main>
+        </div>
+
+        <div class="category-section" data-category="comedy" id="section-comedy">
+            <h2 class="category-header">Comedy</h2>
+            <main class="grid" id="grid-comedy"></main>
+        </div>
+
+        <div class="category-section" data-category="rom-com" id="section-rom-com">
+            <h2 class="category-header">Rom-Com</h2>
+            <main class="grid" id="grid-rom-com"></main>
+        </div>
+
+    </div>
 
     <div class="modal-overlay" id="trailerModal">
         <div class="modal-content">
@@ -499,13 +328,9 @@
         </div>
     </div>
 
-    <div class="auth-overlay" id="authModal">
+    <div class="auth-overlay auth-modal" id="authModal">
         <div class="auth-box">
-            
-            <div class="auth-mascot">
-                <i class="fa-solid fa-clapperboard"></i>
-            </div>
-            
+            <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div>
             <button class="close-auth" id="closeAuthModal"><i class="fa-solid fa-xmark"></i></button>
             
             <h2 class="auth-title">Join the Community</h2>
@@ -518,23 +343,12 @@
             </ul>
 
             <div class="auth-buttons">
-                <button class="social-auth-btn">
-                    <i class="fa-brands fa-github"></i> Continue with GitHub
-                </button>
                 <button class="social-auth-btn" id="googleLoginBtn">
                     <i class="fa-brands fa-google" style="color: #4285F4;"></i> Continue with Google
                 </button>
-                <button class="social-auth-btn">
-                    <i class="fa-brands fa-x-twitter"></i> Continue with X
-                </button>
             </div>
 
-            <p class="auth-terms">
-                By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
-            </p>
-            <p class="auth-login-link">
-                Already have an account? <a href="#">Sign in</a>
-            </p>
+            <p class="auth-terms">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
         </div>
     </div>
 
@@ -568,8 +382,6 @@
             if (mobileMenuBtn && navMenu) {
                 mobileMenuBtn.addEventListener('click', () => {
                     navMenu.classList.toggle('active');
-                    
-                    // Switch between hamburger and X icon
                     const icon = mobileMenuBtn.querySelector('i');
                     if (navMenu.classList.contains('active')) {
                         icon.classList.replace('fa-bars', 'fa-xmark');
@@ -578,7 +390,6 @@
                     }
                 });
 
-                // Close menu if user clicks a link
                 const mobileLinks = navMenu.querySelectorAll('a');
                 mobileLinks.forEach(link => {
                     link.addEventListener('click', () => {
@@ -588,42 +399,50 @@
                 });
             }
 
-            // Setup Search & Filtering
+            // --- Setup Search & Advanced Section Filtering ---
             const searchInput = document.getElementById('searchInput');
             const filterBtns = document.querySelectorAll('.filter-btn');
 
-            function filterMovies() {
-                const searchText = searchInput.value.toLowerCase().trim();
-                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            window.filterMovies = function() {
+                const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
+                const activeBtn = document.querySelector('.filter-btn.active');
+                const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+                
+                // 1. Filter individual cards based on search text
                 const cards = document.querySelectorAll('.card');
-
                 cards.forEach(card => {
                     const title = card.querySelector('.title').textContent.toLowerCase();
-                    const genres = card.getAttribute('data-genres') ? card.getAttribute('data-genres').toLowerCase() : "";
-                    const matchesSearch = title.includes(searchText);
-                    const matchesGenre = activeFilter === 'all' || genres.includes(activeFilter);
-
-                    if (matchesSearch && matchesGenre) {
+                    if (title.includes(searchText)) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
                     }
                 });
+
+                // 2. Hide/Show entire Category Sections based on top buttons and visible cards
+                document.querySelectorAll('.category-section').forEach(section => {
+                    const sectionCat = section.getAttribute('data-category');
+                    const visibleCards = Array.from(section.querySelectorAll('.card')).filter(c => !c.classList.contains('hidden')).length;
+
+                    if ((activeFilter === 'all' || activeFilter === sectionCat) && visibleCards > 0) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
             }
 
-            if(searchInput) {
-                searchInput.addEventListener('input', filterMovies);
-            }
+            if(searchInput) searchInput.addEventListener('input', window.filterMovies);
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    filterMovies();
+                    window.filterMovies();
                 });
             });
 
-            // Trailer Modal Helper Function (Attached to window so Firebase can trigger it)
+            // --- Trailer Modal Logic ---
             window.openTrailer = function(videoUrl) {
                 const modal = document.getElementById('trailerModal');
                 const iframe = document.getElementById('trailerFrame');
@@ -634,7 +453,6 @@
                 }
             };
 
-            // Hardcoded Buttons Trigger
             document.body.addEventListener('click', (e) => {
                 if(e.target.closest('.btn-trailer')) {
                     e.preventDefault();
@@ -654,20 +472,16 @@
             }
 
             if(closeBtn) closeBtn.addEventListener('click', closeTrailer);
-            
             if(trailerModal) {
                 trailerModal.addEventListener('click', (e) => {
                     if (e.target === trailerModal) closeTrailer();
                 });
             }
-
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && trailerModal.classList.contains('active')) {
-                    closeTrailer();
-                }
+                if (e.key === 'Escape' && trailerModal.classList.contains('active')) closeTrailer();
             });
 
-            // Setup Auth Modal Logic
+            // --- Auth Modal Logic ---
             const authModal = document.getElementById('authModal');
             const openAuthBtn = document.getElementById('openAuthModal');
             const closeAuthBtn = document.getElementById('closeAuthModal');
@@ -692,12 +506,11 @@
     </script>
 
     <script type="module">
-        // 1. Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // 2. YOUR CONFIG (!!! REPLACE WITH YOUR REAL FIREBASE KEYS !!!)
+        // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
         const firebaseConfig = {
   apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
   authDomain: "dailyscenes7.firebaseapp.com",
@@ -708,7 +521,6 @@
   measurementId: "G-7PYNRBP33W"
 };
 
-        // 3. Initialize Firebase
         try {
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
@@ -733,31 +545,34 @@
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    signBtnNav.innerText = user.displayName.split(' ')[0]; // Show user's first name
-                    signBtnNav.style.borderColor = "#00ff88"; // Green glow on nav button
+                    signBtnNav.innerText = user.displayName.split(' ')[0]; 
+                    signBtnNav.style.borderColor = "#00ff88"; 
                 } else {
                     signBtnNav.innerText = "Sign In";
                     signBtnNav.style.borderColor = "rgba(255,255,255,0.2)";
                 }
             });
 
-            // --- LIVE DATABASE LOGIC ---
-            const movieGrid = document.getElementById('movieGrid');
+            // --- LIVE DATABASE LOGIC (WITH CATEGORIES) ---
             const q = query(collection(db, "movies"), orderBy("dateAdded", "desc"));
             
             onSnapshot(q, (snapshot) => {
-                // If the database connects and has data, clear the hardcoded demo cards
-                if(!snapshot.empty) {
-                    movieGrid.innerHTML = ""; 
-                }
+                // 1. Clear all grids first and hide the sections
+                const categories = ['action', 'thriller', 'drama', 'horror', 'comedy', 'rom-com'];
+                categories.forEach(cat => {
+                    const grid = document.getElementById(`grid-${cat}`);
+                    const section = document.getElementById(`section-${cat}`);
+                    if(grid) grid.innerHTML = "";
+                    if(section) section.style.display = "none"; 
+                });
 
+                // 2. Loop through movies and put them in their specific grids
                 snapshot.forEach((doc) => {
                     const movie = doc.data();
                     const card = document.createElement('article');
                     card.className = 'card';
                     card.setAttribute('data-genres', movie.review || ''); 
                     
-                    // Create the platform buttons for the UI based on database truth
                     let platformLinks = '';
                     if(movie.platforms) {
                         if(movie.platforms.netflix) platformLinks += `<a href="https://www.netflix.com" target="_blank" class="btn btn-netflix"><i class="fa-brands fa-neos"></i> Netflix</a>`;
@@ -777,10 +592,23 @@
                             </div>
                         </div>
                     `;
-                    movieGrid.appendChild(card);
+                    
+                    // Match the movie to its category grid! (Fallback to drama if empty)
+                    const categoryCode = movie.category || 'drama'; 
+                    const targetGrid = document.getElementById(`grid-${categoryCode}`);
+                    const targetSection = document.getElementById(`section-${categoryCode}`);
+                    
+                    if(targetGrid && targetSection) {
+                        targetGrid.appendChild(card);
+                        targetSection.style.display = "block"; 
+                    }
                 });
+                
+                // Re-trigger the filter so the top buttons still work perfectly
+                if(typeof window.filterMovies === 'function') window.filterMovies();
+                
             }, (error) => {
-                console.log("Firebase not connected yet, showing demo data.", error.message);
+                console.log("Firebase error:", error.message);
             });
 
         } catch(e) {
