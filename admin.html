@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -111,14 +111,12 @@
         .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: white; }
 
         /* --- Premium Auth Modal --- */
-        .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .auth-overlay.active { opacity: 1; pointer-events: auto; }
         .auth-box { background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; width: 90%; max-width: 420px; padding: 45px 35px 35px; position: relative; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.8); transform: scale(0.95); transition: transform 0.3s ease; }
         .auth-overlay.active .auth-box { transform: scale(1); }
         .auth-mascot { position: absolute; top: -40px; left: -30px; width: 85px; height: 85px; background: linear-gradient(135deg, #ff2c37, #b30000); border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4), inset 0 5px 10px rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.2); z-index: 10; transform: rotate(-10deg); animation: floatMascot 4s ease-in-out infinite; }
         @keyframes floatMascot { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-12px) rotate(-2deg); } }
-        .close-auth { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
-        .close-auth:hover { color: white; }
         .auth-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
         .auth-subtitle { font-size: 0.95rem; color: #a0a0a0; margin-bottom: 25px; line-height: 1.5; }
         .social-auth-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; color: white; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
@@ -224,17 +222,30 @@
                             <label>Lead Cast</label>
                             <input type="text" id="leadCast" placeholder="e.g. Leonardo DiCaprio">
                         </div>
-                        <div class="form-group full-width">
-                            <label>Short Review / Genres (For the Card & Search)</label>
-                            <textarea id="shortReview" placeholder="e.g. Action, Thriller. A mind-bending heist..." required></textarea>
+                        
+                        <div class="form-group">
+                            <label>Category / Genre</label>
+                            <select id="movieCategory" required>
+                                <option value="action">Action & Adventure</option>
+                                <option value="comedy">Comedy</option>
+                                <option value="drama">Drama</option>
+                                <option value="horror">Horror</option>
+                                <option value="rom-com">Rom-Com</option>
+                                <option value="thriller">Thriller & Suspense</option>
+                            </select>
                         </div>
+
                         <div class="form-group">
                             <label>Poster Image URL</label>
                             <input type="url" id="posterUrl" placeholder="https://..." required>
                         </div>
-                        <div class="form-group">
-                            <label>YouTube Embed Trailer URL</label>
-                            <input type="url" id="trailerUrl" placeholder="https://www.youtube.com/embed/..." required>
+                        <div class="form-group full-width">
+                            <label>Short Review / Synopsis (For the Card & Search)</label>
+                            <textarea id="shortReview" placeholder="e.g. A mind-bending heist..." required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>YouTube Embed Trailer URL (Auto-converts normal links!)</label>
+                            <input type="url" id="trailerUrl" placeholder="https://youtu.be/..." required>
                         </div>
                         <div class="form-group full-width">
                             <label>Available Platforms</label>
@@ -247,7 +258,8 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; text-align: right;">  
+                    <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; text-align: right;">
+                        <button type="button" style="background:none; border:none; color:#888; margin-right: 20px; cursor:pointer;" onclick="switchView('dashboard')">Cancel</button>
                         <button type="submit" class="btn-primary" id="submitBtn" style="display:inline-flex;">Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i></button>
                     </div>
                 </form>
@@ -258,9 +270,9 @@
 
     <div class="auth-overlay" id="authModal">
         <div class="auth-box">
-            <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div> 
+            <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div>
             <h2 class="auth-title">Admin Access</h2>
-            <p class="auth-subtitle">Sign in to manage dailyscenes7 content and publish new scenes.</p>
+            <p class="auth-subtitle">Sign in to manage dailyscenes7 content and publish new scenes. Strictly locked to owner.</p>
             <div class="auth-buttons">
                 <button class="social-auth-btn" id="googleLoginBtn">
                     <i class="fa-brands fa-google" style="color: #4285F4;"></i> Sign in with Google
@@ -279,7 +291,6 @@
             const titles = { 'dashboard': 'Dashboard Overview', 'movies': 'Manage Movie Database', 'add-movie': 'Publish New Reel' };
             document.getElementById('topbar-title').innerText = titles[viewName] || 'Admin Panel';
         };
-  
     </script>
 
     <script type="module">
@@ -287,6 +298,7 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
+        // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
         const firebaseConfig = {
   apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
   authDomain: "dailyscenes7.firebaseapp.com",
@@ -296,7 +308,6 @@
   appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
   measurementId: "G-7PYNRBP33W"
 };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -336,7 +347,10 @@
                 adminName.innerText = user.displayName;
                 if(user.photoURL) adminAvatar.src = user.photoURL;
                 sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Sign Out';
-                sidebarAuthBtn.onclick = () => signOut(auth);
+                sidebarAuthBtn.onclick = () => {
+                    signOut(auth);
+                    window.location.reload(); // Reload to force login screen
+                };
                 topbarAuthBtn.onclick = null; 
             } else {
                 // Logged Out / Unauthorized State
@@ -344,11 +358,8 @@
                 adminName.innerText = "Not Logged In";
                 adminAvatar.src = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"; 
                 sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
-                const openModal = (e) => { e.preventDefault(); document.getElementById('authModal').classList.add('active'); };
-                sidebarAuthBtn.onclick = openModal;
-                topbarAuthBtn.onclick = openModal;
                 
-                // Force the modal to open if they aren't logged in
+                // Force the modal to stay open if they aren't logged in
                 document.getElementById('authModal').classList.add('active');
             }
         });
@@ -385,6 +396,9 @@
                 }
                 if(platformsHTML === '') platformsHTML = '<span class="text-muted">None</span>';
 
+                // We display the new category in the table too!
+                const categoryDisplay = movie.category ? movie.category.toUpperCase() : 'N/A';
+
                 manageMoviesTableBody.innerHTML += `
                     <tr>
                         <td class="td-movie">
@@ -406,7 +420,7 @@
                             <img src="${movie.poster}" class="td-poster" alt="poster">
                             <strong>${movie.title}</strong>
                         </td>
-                        <td>${movie.review ? movie.review.substring(0, 30) + '...' : 'N/A'}</td>
+                        <td><strong style="color:var(--accent); font-size:0.8rem;">[${categoryDisplay}]</strong> <br> ${movie.review ? movie.review.substring(0, 30) + '...' : 'N/A'}</td>
                         <td>${platformsHTML}</td>
                     </tr>
                 `;
@@ -426,7 +440,7 @@
             }
         };
 
-       // --- PUBLISH LOGIC ---
+        // --- PUBLISH LOGIC ---
         document.getElementById('addMovieForm').addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
@@ -440,16 +454,14 @@
             btn.style.opacity = "0.7";
 
             try {
-                // AUTO-CONVERT YOUTUBE LINKS TO EMBED FORMAT
+                // AUTO-CONVERT YOUTUBE LINKS
                 let rawTrailer = document.getElementById('trailerUrl').value;
                 let embedUrl = rawTrailer;
                 
                 if (rawTrailer.includes("youtu.be/")) {
-                    // Converts: https://youtu.be/4i00NbT1ceo?si=... -> https://www.youtube.com/embed/4i00NbT1ceo
                     let videoId = rawTrailer.split("youtu.be/")[1].split("?")[0];
                     embedUrl = "https://www.youtube.com/embed/" + videoId;
                 } else if (rawTrailer.includes("watch?v=")) {
-                    // Converts: https://www.youtube.com/watch?v=4i00NbT1ceo -> https://www.youtube.com/embed/4i00NbT1ceo
                     let videoId = rawTrailer.split("watch?v=")[1].split("&")[0];
                     embedUrl = "https://www.youtube.com/embed/" + videoId;
                 }
@@ -465,9 +477,10 @@
                 await addDoc(collection(db, "movies"), {
                     title: document.getElementById('movieTitle').value,
                     cast: document.getElementById('leadCast').value,
+                    category: document.getElementById('movieCategory').value,
                     review: document.getElementById('shortReview').value,
                     poster: document.getElementById('posterUrl').value,
-                    trailer: embedUrl, // <--- Saves the perfectly formatted link!
+                    trailer: embedUrl,
                     platforms: platforms,
                     dateAdded: new Date().toISOString()
                 });
