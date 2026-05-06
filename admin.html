@@ -247,8 +247,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; text-align: right;">
-                        <button type="button" style="background:none; border:none; color:#888; margin-right: 20px; cursor:pointer;" onclick="switchView('dashboard')">Cancel</button>
+                    <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; text-align: right;">  
                         <button type="submit" class="btn-primary" id="submitBtn" style="display:inline-flex;">Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i></button>
                     </div>
                 </form>
@@ -259,8 +258,7 @@
 
     <div class="auth-overlay" id="authModal">
         <div class="auth-box">
-            <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div>
-            <button class="close-auth" id="closeAuthModal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div> 
             <h2 class="auth-title">Admin Access</h2>
             <p class="auth-subtitle">Sign in to manage dailyscenes7 content and publish new scenes.</p>
             <div class="auth-buttons">
@@ -281,10 +279,7 @@
             const titles = { 'dashboard': 'Dashboard Overview', 'movies': 'Manage Movie Database', 'add-movie': 'Publish New Reel' };
             document.getElementById('topbar-title').innerText = titles[viewName] || 'Admin Panel';
         };
-
-        const authModal = document.getElementById('authModal');
-        const closeAuthBtn = document.getElementById('closeAuthModal');
-        if(closeAuthBtn) closeAuthBtn.addEventListener('click', () => { authModal.classList.remove('active'); });
+  
     </script>
 
     <script type="module">
