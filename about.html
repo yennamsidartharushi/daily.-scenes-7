@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | daily.scenes7</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Core Variables (Matched to your theme) --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #111111;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #e50914; 
+            --glass: rgba(10, 10, 10, 0.7);
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, .brand { font-family: 'Poppins', sans-serif; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; border-bottom: 1px solid var(--border);
+        }
+        .brand { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .brand i { color: var(--accent); }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--text-main); }
+        
+        .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
+        .social-btn:hover { color: var(--accent); }
+
+        /* --- About Hero Section --- */
+        .about-hero { padding: 150px 5% 50px; text-align: center; background: radial-gradient(circle at 50% -20%, #1a0608 0%, var(--bg-dark) 60%); }
+        .about-hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(to right, #fff, #a0a0a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+        .about-hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards; }
+
+        /* --- About Layout Grid --- */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto 100px auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        /* Left Side: Image/Brand Card */
+        .about-image-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        .about-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 4/5;
+        }
+        .image-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 30px;
+        }
+        .image-overlay h3 { font-size: 1.8rem; margin-bottom: 5px; }
+        .image-overlay p { color: var(--accent); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; }
+
+        /* Right Side: Text Content */
+        .about-content h2 { font-size: 2.2rem; margin-bottom: 20px; line-height: 1.2; }
+        .about-content p { color: var(--text-muted); margin-bottom: 20px; font-size: 1.05rem; line-height: 1.7; }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .feature-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+        .feature-item:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.1); }
+        .feature-icon {
+            width: 40px; height: 40px;
+            background: rgba(229, 9, 20, 0.1);
+            color: var(--accent);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; margin-bottom: 15px;
+        }
+        .feature-item h4 { font-size: 1.1rem; margin-bottom: 5px; }
+        .feature-item p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; margin-top: 50px; }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 900px) {
+            .about-container { grid-template-columns: 1fr; gap: 40px; }
+            .nav-link { display: none; } /* Hide text links on mobile */
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="brand"><i class="fa-solid fa-film"></i> daily.scenes7</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="collections.html" class="nav-link">Collections</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
+        </div>
+    </nav>
+
+    <section class="about-hero">
+        <h1>Behind the Lens</h1>
+        <p>The story of daily.scenes7 and the passion for pure movie moments.</p>
+    </section>
+
+    <main class="about-container">
+        
+        <div class="about-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cinematic Edit Setup">
+            <div class="image-overlay">
+                <h3>Sidhu</h3>
+                <p>Digital Creator & Editor</p>
+            </div>
+        </div>
+
+        <div class="about-content">
+            <h2>Cinema in Seconds.</h2>
+            <p>Welcome to <strong>daily.scenes7</strong>. I started this page with a simple goal: to capture the magic of cinema and share it with people who appreciate the art of filmmaking just as much as I do.</p>
+            <p>Movies have the power to make us feel everything from intense joy to profound sadness in a matter of seconds. Whether it's a perfectly delivered line of dialogue, a stunning visual frame, or an incredible score, my mission is to curate and edit these pure movie moments so you can feel every scene.</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-video"></i></div>
+                    <h4>Daily Uploads</h4>
+                    <p>Consistent, high-quality reels highlighting the best of cinema every single day.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h4>Pure Moments</h4>
+                    <p>No distractions. Just carefully color-graded, audio-synced cinematic mastery.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-compass"></i></div>
+                    <h4>Curated Guides</h4>
+                    <p>Connecting you directly to the streaming platforms so you know exactly where to watch.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+                    <h4>Community First</h4>
+                    <p>Built for a growing community of cinephiles who love to discuss and request scenes.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 daily.scenes7 &bull; Cinema in seconds.</p>
+    </footer>
+
+</body>
+</html>

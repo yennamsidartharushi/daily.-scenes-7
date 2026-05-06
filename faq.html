@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | daily.scenes7</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Core Variables --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #111111;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #e50914; 
+            --glass: rgba(10, 10, 10, 0.7);
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, .brand { font-family: 'Poppins', sans-serif; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; border-bottom: 1px solid var(--border);
+        }
+        .brand { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .brand i { color: var(--accent); }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--text-main); }
+        .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
+        .social-btn:hover { color: var(--accent); }
+
+        /* --- Hero Section --- */
+        .hero { padding: 160px 5% 60px; text-align: center; background: radial-gradient(circle at 50% -20%, #1a0608 0%, var(--bg-dark) 60%); }
+        .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; background: linear-gradient(to right, #fff, #a0a0a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; font-weight: 300; opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards; }
+
+        /* --- FAQ Container --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto 100px auto;
+            padding: 0 5%;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        /* --- Accordion Styles --- */
+        .faq-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+        .faq-item:hover { border-color: rgba(255, 255, 255, 0.15); }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+        .faq-question:hover { color: var(--accent); }
+        
+        .faq-icon {
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: transform 0.4s ease;
+        }
+
+        /* The Grid-trick for smooth height animation */
+        .faq-answer-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease;
+        }
+        .faq-answer-inner {
+            overflow: hidden;
+            padding: 0 24px;
+        }
+        .faq-answer-inner p {
+            color: var(--text-muted);
+            padding-bottom: 24px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Active State */
+        .faq-item.active .faq-answer-wrapper { grid-template-rows: 1fr; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        .faq-item.active .faq-question { color: var(--accent); }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Mobile --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-link { display: none; }
+            .faq-question { font-size: 1rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="brand"><i class="fa-solid fa-film"></i> daily.scenes7</a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="collections.html" class="nav-link">Collections</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Got Questions?</h1>
+        <p>Everything you need to know about the page, the edits, and scene requests.</p>
+    </section>
+
+    <main class="faq-container">
+        
+        <div class="faq-item">
+            <button class="faq-question">
+                How often do you post new movie scenes?
+                <i class="fa-solid fa-plus faq-icon"></i>
+            </button>
+            <div class="faq-answer-wrapper">
+                <div class="faq-answer-inner">
+                    <p>I strive to bring you "Cinema in seconds" every single day. Make sure you are following @daily.scenes7 on Instagram and have notifications turned on so you never miss an upload.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                What software do you use to edit?
+                <i class="fa-solid fa-plus faq-icon"></i>
+            </button>
+            <div class="faq-answer-wrapper">
+                <div class="faq-answer-inner">
+                    <p>I use a combination of professional video editing software. Typically, Premiere Pro is used for syncing the audio and getting the cuts perfect, while After Effects is used for the cinematic color grading and smooth transitions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Can I request a specific movie or scene?
+                <i class="fa-solid fa-plus faq-icon"></i>
+            </button>
+            <div class="faq-answer-wrapper">
+                <div class="faq-answer-inner">
+                    <p>Absolutely! I love interacting with the community. You can head over to the <a href="contact.html" style="color: var(--accent); text-decoration: none;">Contact Page</a> and submit a formal request, or just drop the movie name in the comments of my latest reel.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Can I repost your videos on my own page?
+                <i class="fa-solid fa-plus faq-icon"></i>
+            </button>
+            <div class="faq-answer-wrapper">
+                <div class="faq-answer-inner">
+                    <p>You are more than welcome to share my reels to your Instagram Story! If you wish to repost a video directly to your feed, I kindly ask that you tag @daily.scenes7 in the caption and tag my account on the video itself to give credit for the edit.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Where can I watch the movies featured on your page?
+                <i class="fa-solid fa-plus faq-icon"></i>
+            </button>
+            <div class="faq-answer-wrapper">
+                <div class="faq-answer-inner">
+                    <p>That is exactly what this website is for! Head over to the Home page and use the search bar or category filters to find the movie you saw on my Instagram. Each card has a direct link to streaming platforms like Netflix, Prime Video, Aha, or Hotstar.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 daily.scenes7 &bull; Cinema in seconds.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const questionBtn = item.querySelector('.faq-question');
+                
+                questionBtn.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+
+                    // Close all other items first (optional: remove this loop if you want multiple open at once)
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+
+                    // If the clicked item wasn't active, open it
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

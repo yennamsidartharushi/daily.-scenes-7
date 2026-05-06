@@ -1,0 +1,653 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>daily.scenes7 | Cinematic Curations</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Core Variables --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #111111;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #e50914; 
+            --glass: rgba(10, 10, 10, 0.7);
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+
+        /* --- Cinematic Preloader --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-dark); z-index: 9999; 
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; }
+        .loader-content {
+            display: flex; align-items: center; gap: 15px;
+            font-family: 'Poppins', sans-serif; font-size: 2.5rem; font-weight: 800;
+            color: var(--text-main); animation: pulseGlow 1.5s infinite alternate;
+        }
+        .loader-content i { color: var(--accent); animation: spinFilm 2s linear infinite; }
+        @keyframes pulseGlow { 0% { opacity: 0.6; text-shadow: 0 0 10px transparent; } 100% { opacity: 1; text-shadow: 0 0 25px rgba(229, 9, 20, 0.6); } }
+        @keyframes spinFilm { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- Navigation & PREMIUM LOGO STYLING --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; border-bottom: 1px solid var(--border);
+        }
+        
+        .brand { 
+            display: flex; align-items: center; gap: 12px; 
+            text-decoration: none; transition: opacity 0.3s ease;
+        }
+        .brand:hover { opacity: 0.9; }
+        
+        .logo-icon {
+            width: 36px; height: 36px;
+            filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4));
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+        }
+        .brand:hover .logo-icon {
+            transform: scale(1.1) rotate(90deg);
+            filter: drop-shadow(0 6px 15px rgba(229, 9, 20, 0.8));
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif; font-size: 1.6rem;
+            letter-spacing: -0.5px; display: flex; align-items: baseline;
+        }
+        .logo-daily { color: #ffffff; font-weight: 500; }
+        .logo-scenes { color: var(--accent); font-weight: 800; }
+        .logo-7 {
+            color: transparent; -webkit-text-stroke: 1.5px var(--accent);
+            font-weight: 800; font-style: italic; margin-left: 2px; font-size: 1.8rem;
+        }
+
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--text-main); }
+        .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
+        .social-btn:hover { color: var(--accent); }
+
+        /* --- Hero Section --- */
+        .hero { padding: 160px 5% 60px; text-align: center; background: radial-gradient(circle at 50% -20%, #2a080a 0%, var(--bg-dark) 60%); display: flex; flex-direction: column; align-items: center; }
+        .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; background: linear-gradient(to right, #fff, #a0a0a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px auto; font-weight: 300; }
+
+        /* --- Animated Uiverse Button --- */
+        .btn-wrapper {
+            --rad: 32px; --color-wrapper-border: #fff; --color-btn-bg: #e50914; --color-btn-text: #000;
+            --color-btn-text-shadow: #fff; --color-btn-inset-shadow: #558; --color-layer-a: #fff; --color-layer-b: #8a0000; 
+            --color-overlay-text: #000; --color-overlay-glow: #fff; --color-overlay-shadow: #0004; --color-overlay-highlight: #fff5;
+
+            position: relative; display: flex; align-items: center; justify-content: center; overflow: clip; overflow-clip-margin: 4px;
+            border: 2px solid var(--color-wrapper-border); border-radius: var(--rad);
+            font-family: "Inter", sans-serif; font-size: 1.1rem; font-weight: 800;
+            filter: saturate(0.8) brightness(1.4); cursor: pointer; text-decoration: none;
+        }
+        .gradient-btn {
+            position: relative; z-index: -1; padding: 12px 36px; border: none; border-radius: var(--rad);
+            font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: 0.15rem;
+            color: var(--color-btn-text); background-color: var(--color-btn-bg); background-size: 200% 200%;
+            box-shadow: inset 0 0 10px 9px var(--color-btn-inset-shadow); text-shadow: 0 1px 3px var(--color-btn-text-shadow);
+            cursor: pointer; mix-blend-mode: color-dodge; transition: color 0.3s ease, text-shadow 0.3s ease; text-transform: uppercase;
+        }
+        .gradient-btn::after { content: ""; position: absolute; pointer-events: none; left: 0; top: 0; width: 100%; height: 100%; border-radius: var(--rad); background-size: 200% 200%; mix-blend-mode: difference; z-index: 1; }
+        .gradient-layer { position: absolute; pointer-events: none; left: -160px; width: 500%; aspect-ratio: 1; background: radial-gradient(ellipse at 65% 180%, var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a), var(--color-layer-b), var(--color-layer-a)); mix-blend-mode: difference; animation: rotate 8s linear infinite; }
+        .gradient-layer:last-child { mix-blend-mode: color-dodge; }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .text-overlay { position: absolute; pointer-events: none; z-index: 2; padding: 12px 36px; border-radius: var(--rad); font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: 0.15rem; color: var(--color-overlay-text); text-shadow: 0 0 4px var(--color-overlay-glow); box-shadow: inset 0 -4px 4px 0 var(--color-overlay-shadow), inset 0 4px 4px 0 var(--color-overlay-highlight); mix-blend-mode: multiply; transition: transform 0.3s ease; animation: opacityPulse 5s ease infinite; text-transform: uppercase; }
+        .btn-wrapper:hover .text-overlay { transform: scale(1.1); }
+        .btn-wrapper:hover .gradient-btn { color: #0000; text-shadow: 0 0 0 #0000; }
+        .btn-wrapper:active .text-overlay { transform: scale(0.95); }
+        .btn-wrapper:active .gradient-btn { color: #0000; text-shadow: 0 0 0 #0000; }
+        .light { position: absolute; pointer-events: none; z-index: 1; border-radius: 50px; width: 80%; height: 1.9rem; aspect-ratio: 1; background-color: #fff5; filter: blur(5px); animation: pulse 3s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
+        @keyframes opacityPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* --- Perfectly Seamless Infinite Marquee --- */
+        .available-on {
+            padding: 50px 0; background: rgba(255, 255, 255, 0.01); border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); margin-bottom: 50px; overflow: hidden; position: relative;
+        }
+        .section-label {
+            text-align: center; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 35px; font-weight: 600;
+        }
+        .marquee-wrapper { display: flex; width: 100%; overflow: hidden; position: relative; }
+        .marquee-wrapper::before, .marquee-wrapper::after { content: ''; position: absolute; top: 0; width: 150px; height: 100%; z-index: 2; }
+        .marquee-wrapper::before { left: 0; background: linear-gradient(to right, var(--bg-dark), transparent); }
+        .marquee-wrapper::after { right: 0; background: linear-gradient(to left, var(--bg-dark), transparent); }
+        
+        .marquee-track { display: flex; width: max-content; animation: scrollMarquee 25s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+        .marquee-content { display: flex; align-items: center; gap: 80px; padding-right: 80px; }
+        
+        .brand-logo {
+            height: 40px; width: auto; max-width: 160px; object-fit: contain; cursor: pointer;
+            filter: grayscale(100%) opacity(0.4); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .brand-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.15); }
+        .brand-logo.apple { height: 35px; filter: grayscale(100%) opacity(0.5) invert(1); } 
+        .brand-logo.apple:hover { filter: grayscale(0%) opacity(1) invert(1); }
+        .brand-logo.hotstar { height: 50px; } 
+
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- Search & Filter Bar --- */
+        .controls-container { max-width: 900px; margin: 0 auto 50px auto; padding: 0 5%; }
+        .search-box { position: relative; margin-bottom: 20px; }
+        .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .search-input { width: 100%; padding: 16px 20px 16px 50px; border-radius: 30px; background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .search-input:focus { border-color: var(--accent); }
+        .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .filter-btn { background-color: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease; }
+        .filter-btn:hover { background-color: rgba(255, 255, 255, 0.1); color: var(--text-main); }
+        .filter-btn.active { background-color: var(--accent); color: white; border-color: var(--accent); }
+
+        /* --- Movie Grid & Cards --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; padding: 0 5% 80px; max-width: 1400px; margin: 0 auto; }
+        .card { position: relative; border-radius: 16px; overflow: hidden; background-color: var(--bg-card); aspect-ratio: 16 / 9; cursor: pointer; border: 1px solid var(--border); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .card.hidden { display: none; }
+        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.8); z-index: 10; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+        .card:hover .card-img { transform: scale(1.1); }
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; transition: background 0.4s ease; }
+        .tags { display: flex; gap: 8px; margin-bottom: 10px; }
+        .tag { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(5px); padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+        .title { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
+        .cast { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
+
+        /* --- Buttons --- */
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
+        .card:hover .actions { opacity: 1; transform: translateY(0); }
+        .btn { flex: 1; min-width: 120px; padding: 10px; border-radius: 8px; text-align: center; text-decoration: none; color: white; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: filter 0.2s ease, transform 0.2s ease; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+        .btn:hover { filter: brightness(1.2); transform: scale(1.05); }
+        .btn-trailer { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-hotstar { background: linear-gradient(135deg, #032cfc, #1a4fff); }
+        .btn-aha { background: linear-gradient(135deg, #ff6600, #ff8533); }
+        .btn-netflix { background: linear-gradient(135deg, #E50914, #ff2c37); }
+        .btn-prime { background: linear-gradient(135deg, #00A8E1, #33bfff); }
+
+        /* --- Modal Styles --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content { width: 90%; max-width: 900px; position: relative; transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .close-modal { position: absolute; top: -45px; right: 0; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+
+        /* --- Premium Auth Modal --- */
+        .auth-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .auth-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .auth-box {
+            background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            width: 90%; max-width: 420px;
+            padding: 45px 35px 35px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            transform: scale(0.95); transition: transform 0.3s ease;
+        }
+        .auth-overlay.active .auth-box { transform: scale(1); }
+
+        /* --- Unbreakable 3D Floating Icon --- */
+        .auth-mascot {
+            position: absolute;
+            top: -40px;
+            left: -30px;
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #ff2c37, #b30000);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4), inset 0 5px 10px rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 10;
+            transform: rotate(-10deg);
+            animation: floatMascot 4s ease-in-out infinite;
+        }
+
+        @keyframes floatMascot {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-12px) rotate(-2deg); }
+        }
+
+        .close-auth {
+            position: absolute; top: 20px; right: 20px;
+            background: none; border: none; color: #888;
+            font-size: 1.2rem; cursor: pointer; transition: color 0.2s;
+        }
+        .close-auth:hover { color: white; }
+
+        .auth-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+        .auth-subtitle { font-size: 0.95rem; color: #a0a0a0; margin-bottom: 25px; line-height: 1.5; }
+
+        .auth-features {
+            text-align: left; list-style: none; margin: 0 auto 30px;
+            max-width: 90%; color: #cccccc; font-size: 0.9rem;
+        }
+        .auth-features li { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-weight: 500; }
+        .auth-features i { color: #6C5CE7; font-size: 0.9rem; }
+
+        .auth-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .social-auth-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 14px;
+            background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; color: white; font-family: 'Inter', sans-serif;
+            font-size: 0.95rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .social-auth-btn i { font-size: 1.1rem; }
+        .social-auth-btn:hover { background: #25252b; border-color: rgba(255,255,255,0.1); }
+
+        .auth-terms { font-size: 0.75rem; color: #777; margin-bottom: 15px; }
+        .auth-terms a { color: #aaa; text-decoration: underline; transition: color 0.2s; }
+        .auth-terms a:hover { color: white; }
+
+        .auth-login-link { font-size: 0.9rem; color: #aaa; }
+        .auth-login-link a { color: #6C5CE7; font-weight: 600; text-decoration: none; transition: filter 0.2s; }
+        .auth-login-link a:hover { filter: brightness(1.2); }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .actions { opacity: 1; transform: translateY(0); }
+            .card { aspect-ratio: 4/3; }
+            .nav-link { display: none; }
+            .marquee-wrapper::before, .marquee-wrapper::after { width: 50px; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="loader-content">
+            <i class="fa-solid fa-film"></i> daily.scenes7
+        </div>
+    </div>
+
+    <nav>
+        <a href="index.html" class="brand">
+            <svg class="logo-icon" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="42" height="42" rx="10" fill="none" stroke="url(#logo-grad)" stroke-width="3"/>
+                <path d="M20 16 L36 25 L20 34 Z" fill="url(#logo-grad)"/>
+                <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <defs>
+                    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff2c37" />
+                        <stop offset="100%" stop-color="#E50914" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="logo-text">
+                <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
+            </div>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="collections.html" class="nav-link">Collections</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="#" class="nav-link" id="openAuthModal" style="color: white; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;">Sign In</a>
+            <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Feel Every Scene.</h1>
+        <p>You saw the magic on Instagram. Now, discover where to stream the full masterpiece.</p>
+        
+        <a href="#filterContainer" style="text-decoration: none;">
+            <div class="btn-wrapper">
+                <div class="light"></div>
+                <div class="gradient-layer" style="animation-delay: 0s; animation-duration: 25s;"></div>
+                <div class="gradient-layer" style="animation-delay: 0.15s; animation-duration: 15.9s;"></div>
+                <div class="gradient-layer" style="animation-delay: 0.53s; animation-duration: 26.4s;"></div>
+                <div class="gradient-layer" style="animation-delay: 0.45s; animation-duration: 17.8s;"></div>
+                <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 19.2s;"></div>
+                <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 29.2s;"></div>
+                <div class="gradient-layer" style="animation-delay: 1.6s; animation-duration: 20.2s;"></div>
+                <button class="gradient-btn">Explore Now</button>
+                <div class="text-overlay">Explore Now</div>
+            </div>
+        </a>
+    </section>
+
+    <section class="available-on">
+        <p class="section-label">Curating from the best platforms</p>
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                
+                <div class="marquee-content">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="brand-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" alt="Prime Video" class="brand-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Disney%2B_Hotstar_logo.svg" alt="Disney+ Hotstar" class="brand-logo hotstar">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Ctext x='0' y='32' font-family='Arial, sans-serif' font-weight='900' font-size='38' fill='%23ff6600' letter-spacing='-2'%3Eaha%3C/text%3E%3C/svg%3E" alt="Aha Video" class="brand-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg" alt="Apple TV+" class="brand-logo apple">
+                </div>
+                
+                <div class="marquee-content" aria-hidden="true">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="brand-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" alt="Prime Video" class="brand-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Disney%2B_Hotstar_logo.svg" alt="Disney+ Hotstar" class="brand-logo hotstar">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Ctext x='0' y='32' font-family='Arial, sans-serif' font-weight='900' font-size='38' fill='%23ff6600' letter-spacing='-2'%3Eaha%3C/text%3E%3C/svg%3E" alt="Aha Video" class="brand-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg" alt="Apple TV+" class="brand-logo apple">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="controls-container">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search for a movie title...">
+        </div>
+        <div class="filters" id="filterContainer">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="rom-com">Rom-Com</button>
+            <button class="filter-btn" data-filter="comedy">Comedy</button>
+            <button class="filter-btn" data-filter="action">Action</button>
+            <button class="filter-btn" data-filter="thriller">Thriller</button>
+            <button class="filter-btn" data-filter="horror">Horror</button>
+        </div>
+    </section>
+
+    <main class="grid" id="movieGrid">
+        
+        <article class="card" data-genres="rom-com comedy">
+            <img src="https://i.pinimg.com/1200x/ae/be/22/aebe228d06d9f815683f4aef62354082.jpg" alt="Premalu" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Rom-Com</span><span class="tag">2024</span></div>
+                <h2 class="title">Premalu</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.hotstar.com" target="_blank" class="btn btn-hotstar"><i class="fa-solid fa-play"></i> Hotstar</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="drama comedy">
+            <img src="https://i.pinimg.com/1200x/d1/eb/bd/d1ebbd5e5bd6507030ab732ba82a2e2c.jpg" alt="Love Today" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Comedy</span><span class="tag">Drama</span></div>
+                <h2 class="title">Love Today</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.netflix.com" target="_blank" class="btn btn-netflix"><i class="fa-brands fa-neos"></i> Netflix</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="action thriller">
+            <img src="https://i.pinimg.com/1200x/33/58/a0/3358a09c927bf9c796c007926cf9a805.jpg" alt="Dragon" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Action</span><span class="tag">Thriller</span></div>
+                <h2 class="title">Dragon</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="thriller action">
+            <img src="https://i.pinimg.com/736x/2f/40/93/2f4093107889415b6c961affa2c977e4.jpg" alt="Odela 2" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Thriller</span><span class="tag">Action</span></div>
+                <h2 class="title">Odela 2</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.ahavideo.in" target="_blank" class="btn btn-aha"><i class="fa-solid fa-play"></i> Aha</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="horror thriller">
+            <img src="https://24newsdaily.com/wp-content/uploads/2022/08/Masooda-Movie-OTT-Release-Date.png" alt="Masooda" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Horror</span><span class="tag">Thriller</span></div>
+                <h2 class="title">Masooda</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.ahavideo.in" target="_blank" class="btn btn-aha"><i class="fa-solid fa-play"></i> Aha</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="action thriller">
+            <img src="https://static.toiimg.com/thumb/imgsize-21912,msid-123831755,width-450,resizemode-4/123831755.jpg" alt="Sambavam" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Action</span><span class="tag">Thriller</span></div>
+                <h2 class="title">SAMBAVAM</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="comedy rom-com">
+            <img src="https://content.tupaki.com/h-upload/2025/03/31/1500x900_750882-b.gif" alt="MAD" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Comedy</span><span class="tag">Rom-Com</span></div>
+                <h2 class="title">MAD</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.netflix.com" target="_blank" class="btn btn-netflix"><i class="fa-brands fa-neos"></i> Netflix</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card" data-genres="thriller action">
+            <img src="https://content.tupaki.com/en/feeds/2025/09/12/944403-kidki.webp" alt="Kishkindhapuri" class="card-img">
+            <div class="card-overlay">
+                <div class="tags"><span class="tag">Thriller</span><span class="tag">Mystery</span></div>
+                <h2 class="title">Kishkindhapuri</h2>
+                <div class="actions">
+                    <button class="btn btn-trailer" data-trailer="https://www.youtube.com/embed/YE7VzlLtp-4"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                    <a href="https://www.primevideo.com" target="_blank" class="btn btn-prime"><i class="fa-brands fa-amazon"></i> Prime</a>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <div class="modal-overlay" id="trailerModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="video-container">
+                <iframe id="trailerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-overlay" id="authModal">
+        <div class="auth-box">
+            
+            <div class="auth-mascot">
+                <i class="fa-solid fa-clapperboard"></i>
+            </div>
+            
+            <button class="close-auth" id="closeAuthModal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <h2 class="auth-title">Join the Community</h2>
+            <p class="auth-subtitle">Request scenes, save your favorites, and join 100,000+ movie lovers.</p>
+            
+            <ul class="auth-features">
+                <li><i class="fa-solid fa-check"></i> Request and vote on new movie edits</li>
+                <li><i class="fa-solid fa-check"></i> Create custom playlists of your favorite scenes</li>
+                <li><i class="fa-solid fa-check"></i> Join a thriving community of cinephiles</li>
+            </ul>
+
+            <div class="auth-buttons">
+                <button class="social-auth-btn">
+                    <i class="fa-brands fa-github"></i> Continue with GitHub
+                </button>
+                <button class="social-auth-btn">
+                    <i class="fa-brands fa-google" style="color: #4285F4;"></i> Continue with Google
+                </button>
+                <button class="social-auth-btn">
+                    <i class="fa-brands fa-x-twitter"></i> Continue with X
+                </button>
+            </div>
+
+            <p class="auth-terms">
+                By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+            </p>
+            <p class="auth-login-link">
+                Already have an account? <a href="#">Sign in</a>
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 daily.scenes7 &bull; Cinema in seconds.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Preloader
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                setTimeout(() => preloader.remove(), 800);
+            }, 1200);
+
+            // Setup Search & Filtering
+            const searchInput = document.getElementById('searchInput');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
+
+            function filterMovies() {
+                const searchText = searchInput.value.toLowerCase().trim();
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.title').textContent.toLowerCase();
+                    const genres = card.getAttribute('data-genres').toLowerCase();
+                    const matchesSearch = title.includes(searchText);
+                    const matchesGenre = activeFilter === 'all' || genres.includes(activeFilter);
+
+                    if (matchesSearch && matchesGenre) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            }
+
+            if(searchInput) {
+                searchInput.addEventListener('input', filterMovies);
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterMovies();
+                });
+            });
+
+            // Setup Video Trailer Modal
+            const trailerModal = document.getElementById('trailerModal');
+            const iframe = document.getElementById('trailerFrame');
+            const closeBtn = document.getElementById('closeModal');
+            const trailerBtns = document.querySelectorAll('.btn-trailer');
+
+            trailerBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    const videoUrl = btn.getAttribute('data-trailer');
+                    if(videoUrl) {
+                        iframe.src = videoUrl + "?autoplay=1"; 
+                        trailerModal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; 
+                    }
+                });
+            });
+
+            function closeTrailer() {
+                trailerModal.classList.remove('active');
+                document.body.style.overflow = 'auto'; 
+                setTimeout(() => { iframe.src = ""; }, 300); 
+            }
+
+            if(closeBtn) closeBtn.addEventListener('click', closeTrailer);
+            
+            if(trailerModal) {
+                trailerModal.addEventListener('click', (e) => {
+                    if (e.target === trailerModal) closeTrailer();
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && trailerModal.classList.contains('active')) {
+                    closeTrailer();
+                }
+            });
+
+            // Setup Auth Modal Logic
+            const authModal = document.getElementById('authModal');
+            const openAuthBtn = document.getElementById('openAuthModal');
+            const closeAuthBtn = document.getElementById('closeAuthModal');
+
+            if(openAuthBtn) {
+                openAuthBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    authModal.classList.add('active');
+                });
+            }
+            if(closeAuthBtn) {
+                closeAuthBtn.addEventListener('click', () => {
+                    authModal.classList.remove('active');
+                });
+            }
+            if(authModal) {
+                authModal.addEventListener('click', (e) => {
+                    if (e.target === authModal) authModal.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
