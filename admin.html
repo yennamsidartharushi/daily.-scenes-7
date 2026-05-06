@@ -294,20 +294,21 @@
 
         // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
         const firebaseConfig = {
-  apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
-  authDomain: "dailyscenes7.firebaseapp.com",
-  projectId: "dailyscenes7",
-  storageBucket: "dailyscenes7.firebasestorage.app",
-  messagingSenderId: "381272866401",
-  appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
-  measurementId: "G-7PYNRBP33W"
-};
-
+            apiKey: "YOUR_API_KEY",
+            authDomain: "dailyscenes7.firebaseapp.com",
+            projectId: "dailyscenes7",
+            storageBucket: "dailyscenes7.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
+
+        // --- THE MASTER ADMIN EMAIL ---
+        const ADMIN_EMAIL = "yennamyennamsidhu@gmail.com";
 
         // --- AUTHENTICATION LOGIC ---
         const googleLoginBtn = document.getElementById('googleLoginBtn');
@@ -319,32 +320,45 @@
         if (googleLoginBtn) {
             googleLoginBtn.addEventListener('click', async () => {
                 try {
-                    await signInWithPopup(auth, provider);
-                    document.getElementById('authModal').classList.remove('active');
+                    const result = await signInWithPopup(auth, provider);
+                    
+                    // SECURITY CHECK: Is it the admin email?
+                    if (result.user.email !== ADMIN_EMAIL) {
+                        await signOut(auth); // Kick them out immediately
+                        alert("Access Denied: Only the owner can access this panel.");
+                    } else {
+                        document.getElementById('authModal').classList.remove('active');
+                    }
                 } catch (error) {
-                    alert("Login failed. Check your Firebase settings!");
+                    console.error(error);
                 }
             });
         }
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user && user.email === ADMIN_EMAIL) {
+                // Logged In Admin State
                 adminName.innerText = user.displayName;
                 if(user.photoURL) adminAvatar.src = user.photoURL;
                 sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Sign Out';
                 sidebarAuthBtn.onclick = () => signOut(auth);
                 topbarAuthBtn.onclick = null; 
             } else {
+                // Logged Out / Unauthorized State
+                if (user) signOut(auth); // Failsafe
                 adminName.innerText = "Not Logged In";
                 adminAvatar.src = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"; 
                 sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
                 const openModal = (e) => { e.preventDefault(); document.getElementById('authModal').classList.add('active'); };
                 sidebarAuthBtn.onclick = openModal;
                 topbarAuthBtn.onclick = openModal;
+                
+                // Force the modal to open if they aren't logged in
+                document.getElementById('authModal').classList.add('active');
             }
         });
 
-        // --- LIVE DATABASE SYNC (Fixes the "Fake Data" issue) ---
+        // --- LIVE DATABASE SYNC ---
         const manageMoviesTableBody = document.getElementById('manageMoviesTableBody');
         const dashboardTableBody = document.getElementById('dashboardTableBody');
         const totalScenesCount = document.getElementById('totalScenesCount');
@@ -354,7 +368,7 @@
         onSnapshot(q, (snapshot) => {
             manageMoviesTableBody.innerHTML = "";
             dashboardTableBody.innerHTML = "";
-            totalScenesCount.innerText = snapshot.size; // Updates Dashboard Stat automatically
+            totalScenesCount.innerText = snapshot.size;
 
             if(snapshot.empty) {
                 manageMoviesTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No movies published yet. Add one!</td></tr>";
@@ -366,7 +380,6 @@
                 const movie = documentSnapshot.data();
                 const docId = documentSnapshot.id;
 
-                // Create the little platform badges
                 let platformsHTML = '';
                 if(movie.platforms) {
                     if(movie.platforms.netflix) platformsHTML += `<span class="platform-badge" style="color: #E50914;">Netflix</span>`;
@@ -377,7 +390,6 @@
                 }
                 if(platformsHTML === '') platformsHTML = '<span class="text-muted">None</span>';
 
-                // Build Row for "Manage Movies" Table
                 manageMoviesTableBody.innerHTML += `
                     <tr>
                         <td class="td-movie">
@@ -393,7 +405,6 @@
                     </tr>
                 `;
 
-                // Build Row for "Dashboard" Table (simplified)
                 dashboardTableBody.innerHTML += `
                     <tr>
                         <td class="td-movie">
@@ -409,25 +420,23 @@
             console.log("Waiting for Firebase Connection...");
         });
 
-        // --- DELETE LOGIC (Attached to window so HTML buttons can click it) ---
+        // --- DELETE LOGIC ---
         window.deleteMovie = async (docId) => {
             if(confirm("Are you sure you want to permanently delete this scene?")) {
                 try {
                     await deleteDoc(doc(db, "movies", docId));
-                    // It will automatically disappear from the table because of onSnapshot!
                 } catch (error) {
                     alert("Error deleting movie: " + error.message);
                 }
             }
         };
 
-        // --- PUBLISH LOGIC ---
+       // --- PUBLISH LOGIC ---
         document.getElementById('addMovieForm').addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
-            if (!auth.currentUser) {
-                alert("You must be signed in to publish!");
-                document.getElementById('authModal').classList.add('active');
+            if (!auth.currentUser || auth.currentUser.email !== ADMIN_EMAIL) {
+                alert("Security Error: Unauthorized to publish.");
                 return;
             }
 
@@ -436,6 +445,20 @@
             btn.style.opacity = "0.7";
 
             try {
+                // AUTO-CONVERT YOUTUBE LINKS TO EMBED FORMAT
+                let rawTrailer = document.getElementById('trailerUrl').value;
+                let embedUrl = rawTrailer;
+                
+                if (rawTrailer.includes("youtu.be/")) {
+                    // Converts: https://youtu.be/4i00NbT1ceo?si=... -> https://www.youtube.com/embed/4i00NbT1ceo
+                    let videoId = rawTrailer.split("youtu.be/")[1].split("?")[0];
+                    embedUrl = "https://www.youtube.com/embed/" + videoId;
+                } else if (rawTrailer.includes("watch?v=")) {
+                    // Converts: https://www.youtube.com/watch?v=4i00NbT1ceo -> https://www.youtube.com/embed/4i00NbT1ceo
+                    let videoId = rawTrailer.split("watch?v=")[1].split("&")[0];
+                    embedUrl = "https://www.youtube.com/embed/" + videoId;
+                }
+
                 const platforms = {
                     netflix: document.getElementById('platNetflix').checked,
                     prime: document.getElementById('platPrime').checked,
@@ -449,7 +472,7 @@
                     cast: document.getElementById('leadCast').value,
                     review: document.getElementById('shortReview').value,
                     poster: document.getElementById('posterUrl').value,
-                    trailer: document.getElementById('trailerUrl').value,
+                    trailer: embedUrl, // <--- Saves the perfectly formatted link!
                     platforms: platforms,
                     dateAdded: new Date().toISOString()
                 });
@@ -460,7 +483,7 @@
 
             } catch (error) {
                 console.error("Error adding document: ", error);
-                alert("Error saving to database. Did you paste your Firebase keys correctly?");
+                alert("Error saving to database. Check console.");
             } finally {
                 btn.innerHTML = 'Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i>';
                 btn.style.opacity = "1";
