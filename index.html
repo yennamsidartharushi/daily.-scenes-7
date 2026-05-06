@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -287,20 +287,10 @@
             color: var(--text-muted);
         }
         .footer-content {
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; justify-content: center; align-items: center; text-align: center;
             flex-wrap: wrap; gap: 30px; margin-bottom: 40px; max-width: 1400px; margin: 0 auto 40px;
         }
-        .footer-brand p { font-size: 0.9rem; margin-top: 10px; max-width: 300px; }
-        .footer-status {
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.03); padding: 12px 20px;
-            border-radius: 12px; border: 1px solid var(--border);
-        }
-        .status-dot {
-            width: 8px; height: 8px; background: #00ff88; border-radius: 50%;
-            box-shadow: 0 0 10px #00ff88; animation: blink 2s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .footer-brand p { font-size: 0.9rem; margin-top: 10px; max-width: 300px; margin-left: auto; margin-right: auto; }
         .footer-bottom {
             text-align: center; padding-top: 30px; border-top: 1px solid var(--border);
             font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
@@ -314,7 +304,6 @@
             .card { aspect-ratio: 4/3; }
             .nav-link { display: none; }
             .marquee-wrapper::before, .marquee-wrapper::after { width: 50px; } 
-            .footer-content { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -505,14 +494,10 @@
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <div class="logo-text" style="font-size: 1.2rem;">
+                <div class="logo-text" style="font-size: 1.2rem; justify-content: center;">
                     <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
                 </div>
                 <p>Curating the soul of cinema, one scene at a time.</p>
-            </div>
-            <div class="footer-status">
-                <span class="status-dot"></span>
-                <span class="status-text">Official Domain: <strong>dailyscenes7.site</strong></span>
             </div>
         </div>
         <div class="footer-bottom">
@@ -640,17 +625,15 @@
 
         // 2. YOUR CONFIG (Replace with your actual keys from Firebase Console!)
         const firebaseConfig = {
-  apiKey: "AIzaSyBPx-vq-U49-eVShAmqtl76gZxkNrzab5c",
-  authDomain: "studio-8663990014-66c3b.firebaseapp.com",
-  databaseURL: "https://studio-8663990014-66c3b-default-rtdb.firebaseio.com",
-  projectId: "studio-8663990014-66c3b",
-  storageBucket: "studio-8663990014-66c3b.firebasestorage.app",
-  messagingSenderId: "1058628689901",
-  appId: "1:1058628689901:web:232aba87b6c85d56ef91e4"
-};
+            apiKey: "YOUR_API_KEY",
+            authDomain: "dailyscenes7.firebaseapp.com",
+            projectId: "dailyscenes7",
+            storageBucket: "dailyscenes7.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_ID",
+            appId: "YOUR_APP_ID"
+        };
+
         // 3. Initialize Firebase
-        // NOTE: If you haven't set up Firebase yet, the rest of this code will just silently wait. 
-        // Your hardcoded demo movies will remain visible until Firebase successfully connects!
         try {
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
@@ -697,7 +680,7 @@
                     const movie = doc.data();
                     const card = document.createElement('article');
                     card.className = 'card';
-                    card.setAttribute('data-genres', movie.review || ''); // Assuming review holds keywords/genres
+                    card.setAttribute('data-genres', movie.review || ''); 
                     card.innerHTML = `
                         <img src="${movie.poster}" class="card-img" alt="${movie.title}">
                         <div class="card-overlay">
@@ -711,7 +694,6 @@
                     movieGrid.appendChild(card);
                 });
             }, (error) => {
-                // If Firebase isn't configured yet, it fails silently and leaves the demo HTML cards intact
                 console.log("Firebase not connected yet, showing demo data.", error.message);
             });
 
