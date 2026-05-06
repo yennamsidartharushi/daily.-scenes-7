@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,23 +38,8 @@
         ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
         /* --- Layout --- */
-        .sidebar {
-            width: 260px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 30px 20px;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            background: radial-gradient(circle at top right, #110405 0%, var(--bg-dark) 40%);
-        }
+        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 30px 20px; z-index: 100; transition: all 0.3s ease; }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: radial-gradient(circle at top right, #110405 0%, var(--bg-dark) 40%); }
 
         /* --- Sidebar Branding & Links --- */
         .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-bottom: 50px; padding: 0 10px; }
@@ -65,13 +50,7 @@
         
         .nav-menu { list-style: none; flex: 1; }
         .nav-item { margin-bottom: 8px; }
-        .nav-link {
-            display: flex; align-items: center; gap: 15px;
-            padding: 14px 20px; color: var(--text-muted);
-            text-decoration: none; border-radius: 12px;
-            font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease;
-            cursor: pointer;
-        }
+        .nav-link { display: flex; align-items: center; gap: 15px; padding: 14px 20px; color: var(--text-muted); text-decoration: none; border-radius: 12px; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; }
         .nav-link i { font-size: 1.1rem; width: 20px; text-align: center; }
         .nav-link:hover { background: rgba(255, 255, 255, 0.03); color: var(--text-main); }
         .nav-link.active { background: linear-gradient(135deg, rgba(229, 9, 20, 0.15), rgba(229, 9, 20, 0)); color: var(--text-main); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; }
@@ -81,20 +60,9 @@
         .logout-btn:hover { background: rgba(255, 82, 82, 0.1); color: #ff5252; }
 
         /* --- Top Header --- */
-        .topbar {
-            padding: 20px 40px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border);
-            background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 50;
-        }
+        .topbar { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(10, 10, 10, 0.5); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 50; }
         .topbar-title { font-size: 1.5rem; font-weight: 600; }
         .topbar-right { display: flex; align-items: center; gap: 20px; }
-        .notification-btn { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; position: relative; transition: color 0.3s; }
-        .notification-btn:hover { color: white; }
-        .badge { position: absolute; top: -5px; right: -5px; background: var(--accent); color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700; font-family: 'Inter'; }
-        
         .admin-profile { display: flex; align-items: center; gap: 12px; background: var(--card-bg); padding: 8px 16px; border-radius: 30px; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.3s; }
         .admin-profile:hover { border-color: var(--accent); }
         .admin-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
@@ -107,16 +75,11 @@
 
         /* --- Dashboard View: Stats Grid --- */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 40px; }
-        .stat-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 16px; padding: 24px; display: flex; flex-direction: column;
-            position: relative; overflow: hidden; transition: transform 0.3s ease;
-        }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform 0.3s ease; }
         .stat-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.1); }
         .stat-icon { position: absolute; top: 24px; right: 24px; font-size: 2rem; color: rgba(255,255,255,0.05); }
         .stat-title { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
         .stat-value { font-size: 2.5rem; font-family: 'Poppins'; font-weight: 700; color: white; }
-        .stat-change { font-size: 0.85rem; color: var(--success); margin-top: 10px; display: flex; align-items: center; gap: 5px; }
 
         /* --- Data Tables --- */
         .table-container { background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
@@ -132,7 +95,7 @@
         
         .td-movie { display: flex; align-items: center; gap: 15px; }
         .td-poster { width: 60px; height: 34px; object-fit: cover; border-radius: 4px; }
-        .platform-badge { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-right: 5px; }
+        .platform-badge { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-right: 5px; display: inline-block; margin-bottom: 4px; }
         .action-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 5px; margin-right: 10px; transition: color 0.2s; font-size: 1.1rem; }
         .action-btn.edit:hover { color: #2196F3; }
         .action-btn.delete:hover { color: var(--accent); }
@@ -142,69 +105,23 @@
         .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
         .form-group.full-width { grid-column: 1 / -1; }
         label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-        input, select, textarea {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            color: white; padding: 14px 16px; border-radius: 8px; font-family: 'Inter'; font-size: 1rem;
-            transition: all 0.3s; outline: none;
-        }
+        input, select, textarea { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: white; padding: 14px 16px; border-radius: 8px; font-family: 'Inter'; font-size: 1rem; transition: all 0.3s; outline: none; }
         input:focus, textarea:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         .checkbox-group { display: flex; gap: 20px; margin-top: 10px; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: white; }
 
         /* --- Premium Auth Modal --- */
-        .auth-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
+        .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .auth-overlay.active { opacity: 1; pointer-events: auto; }
-        
-        .auth-box {
-            background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%);
-            border: 1px solid rgba(255,255,255,0.05); border-radius: 24px;
-            width: 90%; max-width: 420px; padding: 45px 35px 35px;
-            position: relative; text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            transform: scale(0.95); transition: transform 0.3s ease;
-        }
+        .auth-box { background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; width: 90%; max-width: 420px; padding: 45px 35px 35px; position: relative; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.8); transform: scale(0.95); transition: transform 0.3s ease; }
         .auth-overlay.active .auth-box { transform: scale(1); }
-
-        /* Unbreakable 3D CSS Mascot */
-        .auth-mascot {
-            position: absolute; top: -40px; left: -30px;
-            width: 85px; height: 85px;
-            background: linear-gradient(135deg, #ff2c37, #b30000);
-            border-radius: 22px; display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem; color: white;
-            box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4), inset 0 5px 10px rgba(255,255,255,0.4);
-            border: 1px solid rgba(255,255,255,0.2); z-index: 10;
-            transform: rotate(-10deg); animation: floatMascot 4s ease-in-out infinite;
-        }
-        @keyframes floatMascot {
-            0%, 100% { transform: translateY(0) rotate(-10deg); }
-            50% { transform: translateY(-12px) rotate(-2deg); }
-        }
-
-        .close-auth {
-            position: absolute; top: 20px; right: 20px;
-            background: none; border: none; color: #888;
-            font-size: 1.2rem; cursor: pointer; transition: color 0.2s;
-        }
+        .auth-mascot { position: absolute; top: -40px; left: -30px; width: 85px; height: 85px; background: linear-gradient(135deg, #ff2c37, #b30000); border-radius: 22px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; box-shadow: 0 15px 30px rgba(229, 9, 20, 0.4), inset 0 5px 10px rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.2); z-index: 10; transform: rotate(-10deg); animation: floatMascot 4s ease-in-out infinite; }
+        @keyframes floatMascot { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-12px) rotate(-2deg); } }
+        .close-auth { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
         .close-auth:hover { color: white; }
-
         .auth-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
         .auth-subtitle { font-size: 0.95rem; color: #a0a0a0; margin-bottom: 25px; line-height: 1.5; }
-
-        .auth-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
-        .social-auth-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 14px;
-            background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px; color: white; font-family: 'Inter', sans-serif;
-            font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
-        }
-        .social-auth-btn i { font-size: 1.1rem; }
+        .social-auth-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; color: white; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
         .social-auth-btn:hover { background: #25252b; border-color: rgba(255,255,255,0.1); }
     </style>
 </head>
@@ -216,12 +133,7 @@
                 <rect x="4" y="4" width="42" height="42" rx="10" fill="none" stroke="url(#logo-grad)" stroke-width="3"/>
                 <path d="M20 16 L36 25 L20 34 Z" fill="url(#logo-grad)"/>
                 <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <defs>
-                    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ff2c37" />
-                        <stop offset="100%" stop-color="#E50914" />
-                    </linearGradient>
-                </defs>
+                <defs><linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff2c37" /><stop offset="100%" stop-color="#E50914" /></linearGradient></defs>
             </svg>
             <div class="logo-text">
                 <span class="logo-daily">daily.</span><span class="logo-scenes">admin</span>
@@ -229,35 +141,14 @@
         </a>
 
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a class="nav-link active" onclick="switchView('dashboard')">
-                    <i class="fa-solid fa-chart-pie"></i> Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchView('movies')">
-                    <i class="fa-solid fa-film"></i> Manage Movies
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchView('add-movie')">
-                    <i class="fa-solid fa-square-plus"></i> Add New Reel
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="switchView('requests')">
-                    <i class="fa-solid fa-inbox"></i> Scene Requests <span class="badge" style="position:relative; top:0; right:0; margin-left:auto;">12</span>
-                </a>
-            </li>
+            <li class="nav-item"><a class="nav-link active" onclick="switchView('dashboard')"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchView('movies')"><i class="fa-solid fa-film"></i> Manage Movies</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="switchView('add-movie')"><i class="fa-solid fa-square-plus"></i> Add New Reel</a></li>
         </ul>
 
         <div class="sidebar-footer">
-            <a href="index.html" target="_blank" class="nav-link">
-                <i class="fa-solid fa-globe"></i> View Live Site
-            </a>
-            <a class="nav-link logout-btn" id="sidebarAuthBtn">
-                <i class="fa-solid fa-right-to-bracket"></i> Sign In
-            </a>
+            <a href="index.html" target="_blank" class="nav-link"><i class="fa-solid fa-globe"></i> View Live Site</a>
+            <a class="nav-link logout-btn" id="sidebarAuthBtn"><i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
         </div>
     </aside>
 
@@ -266,10 +157,6 @@
         <header class="topbar">
             <h2 class="topbar-title" id="topbar-title">Dashboard Overview</h2>
             <div class="topbar-right">
-                <button class="notification-btn">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="badge">3</span>
-                </button>
                 <div class="admin-profile" id="topbarAuthBtn">
                     <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Admin" class="admin-avatar" id="adminAvatar">
                     <span class="admin-name" id="adminName">Not Logged In</span>
@@ -281,49 +168,26 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <i class="fa-solid fa-video stat-icon"></i>
-                    <div class="stat-title">Total Scenes</div>
-                    <div class="stat-value">142</div>
-                    <div class="stat-change"><i class="fa-solid fa-arrow-trend-up"></i> +8 this week</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fa-solid fa-mouse-pointer stat-icon"></i>
-                    <div class="stat-title">Trailer Clicks</div>
-                    <div class="stat-value">18.4K</div>
-                    <div class="stat-change"><i class="fa-solid fa-arrow-trend-up"></i> +12% vs last month</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fa-solid fa-envelope-open-text stat-icon"></i>
-                    <div class="stat-title">Pending Requests</div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-change" style="color: var(--warning);"><i class="fa-solid fa-circle-exclamation"></i> Action needed</div>
+                    <div class="stat-title">Total Scenes Published</div>
+                    <div class="stat-value" id="totalScenesCount">0</div>
                 </div>
             </div>
 
             <div class="table-container">
                 <div class="table-header">
-                    <h3>Recently Added</h3>
+                    <h3>Recently Added Scenes</h3>
                     <button class="btn-primary" onclick="switchView('add-movie')">Add New</button>
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Movie Title</th>
-                            <th>Genre</th>
+                            <th>Genre/Review</th>
                             <th>Platforms</th>
-                            <th>Date Added</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="td-movie">
-                                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="td-poster" alt="Premalu">
-                                <strong>Premalu</strong>
-                            </td>
-                            <td>Rom-Com, Comedy</td>
-                            <td><span class="platform-badge" style="color: #032cfc;">Hotstar</span></td>
-                            <td>Today</td>
-                        </tr>
-                    </tbody>
+                    <tbody id="dashboardTableBody">
+                        </tbody>
                 </table>
             </div>
         </section>
@@ -332,9 +196,6 @@
             <div class="table-container">
                 <div class="table-header">
                     <h3>All Curated Movies</h3>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" placeholder="Search database..." style="padding: 8px 15px; width: 250px;">
-                    </div>
                 </div>
                 <table>
                     <thead>
@@ -345,20 +206,8 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="td-movie">
-                                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="td-poster">
-                                <strong>Premalu</strong>
-                            </td>
-                            <td>Naslen K., Mamitha B.</td>
-                            <td><span class="platform-badge">Hotstar</span></td>
-                            <td>
-                                <button class="action-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="action-btn delete"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="manageMoviesTableBody">
+                        </tbody>
                 </table>
             </div>
         </section>
@@ -376,8 +225,8 @@
                             <input type="text" id="leadCast" placeholder="e.g. Leonardo DiCaprio">
                         </div>
                         <div class="form-group full-width">
-                            <label>Short Review / Synopsis (For the Card)</label>
-                            <textarea id="shortReview" placeholder="Write a catchy hook..." required></textarea>
+                            <label>Short Review / Genres (For the Card & Search)</label>
+                            <textarea id="shortReview" placeholder="e.g. Action, Thriller. A mind-bending heist..." required></textarea>
                         </div>
                         <div class="form-group">
                             <label>Poster Image URL</label>
@@ -410,16 +259,10 @@
 
     <div class="auth-overlay" id="authModal">
         <div class="auth-box">
-            
-            <div class="auth-mascot">
-                <i class="fa-solid fa-clapperboard"></i>
-            </div>
-            
+            <div class="auth-mascot"><i class="fa-solid fa-clapperboard"></i></div>
             <button class="close-auth" id="closeAuthModal"><i class="fa-solid fa-xmark"></i></button>
-            
             <h2 class="auth-title">Admin Access</h2>
             <p class="auth-subtitle">Sign in to manage dailyscenes7 content and publish new scenes.</p>
-
             <div class="auth-buttons">
                 <button class="social-auth-btn" id="googleLoginBtn">
                     <i class="fa-brands fa-google" style="color: #4285F4;"></i> Sign in with Google
@@ -435,34 +278,21 @@
             document.querySelectorAll('.view-section').forEach(section => section.classList.remove('active'));
             document.getElementById('view-' + viewName).classList.add('active');
 
-            const titles = {
-                'dashboard': 'Dashboard Overview',
-                'movies': 'Manage Movie Database',
-                'add-movie': 'Publish New Reel',
-                'requests': 'Community Scene Requests'
-            };
+            const titles = { 'dashboard': 'Dashboard Overview', 'movies': 'Manage Movie Database', 'add-movie': 'Publish New Reel' };
             document.getElementById('topbar-title').innerText = titles[viewName] || 'Admin Panel';
         };
 
         const authModal = document.getElementById('authModal');
         const closeAuthBtn = document.getElementById('closeAuthModal');
-        
-        if(closeAuthBtn) {
-            closeAuthBtn.addEventListener('click', () => { authModal.classList.remove('active'); });
-        }
-        if(authModal) {
-            authModal.addEventListener('click', (e) => {
-                if (e.target === authModal) authModal.classList.remove('active');
-            });
-        }
+        if(closeAuthBtn) closeAuthBtn.addEventListener('click', () => { authModal.classList.remove('active'); });
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // PASTE YOUR FIREBASE CONFIG HERE
+        // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
         const firebaseConfig = {
   apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
   authDomain: "dailyscenes7.firebaseapp.com",
@@ -473,107 +303,169 @@
   measurementId: "G-7PYNRBP33W"
 };
 
-        try {
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-            const provider = new GoogleAuthProvider();
 
-            // --- AUTHENTICATION LOGIC ---
-            const googleLoginBtn = document.getElementById('googleLoginBtn');
-            const adminName = document.getElementById('adminName');
-            const adminAvatar = document.getElementById('adminAvatar');
-            const sidebarAuthBtn = document.getElementById('sidebarAuthBtn');
-            const topbarAuthBtn = document.getElementById('topbarAuthBtn');
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
 
-            if (googleLoginBtn) {
-                googleLoginBtn.addEventListener('click', async () => {
-                    try {
-                        await signInWithPopup(auth, provider);
-                        document.getElementById('authModal').classList.remove('active');
-                    } catch (error) {
-                        alert("Login failed. Check your Firebase settings!");
-                        console.error(error);
-                    }
-                });
+        // --- AUTHENTICATION LOGIC ---
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const adminName = document.getElementById('adminName');
+        const adminAvatar = document.getElementById('adminAvatar');
+        const sidebarAuthBtn = document.getElementById('sidebarAuthBtn');
+        const topbarAuthBtn = document.getElementById('topbarAuthBtn');
+
+        if (googleLoginBtn) {
+            googleLoginBtn.addEventListener('click', async () => {
+                try {
+                    await signInWithPopup(auth, provider);
+                    document.getElementById('authModal').classList.remove('active');
+                } catch (error) {
+                    alert("Login failed. Check your Firebase settings!");
+                }
+            });
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                adminName.innerText = user.displayName;
+                if(user.photoURL) adminAvatar.src = user.photoURL;
+                sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Sign Out';
+                sidebarAuthBtn.onclick = () => signOut(auth);
+                topbarAuthBtn.onclick = null; 
+            } else {
+                adminName.innerText = "Not Logged In";
+                adminAvatar.src = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"; 
+                sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
+                const openModal = (e) => { e.preventDefault(); document.getElementById('authModal').classList.add('active'); };
+                sidebarAuthBtn.onclick = openModal;
+                topbarAuthBtn.onclick = openModal;
+            }
+        });
+
+        // --- LIVE DATABASE SYNC (Fixes the "Fake Data" issue) ---
+        const manageMoviesTableBody = document.getElementById('manageMoviesTableBody');
+        const dashboardTableBody = document.getElementById('dashboardTableBody');
+        const totalScenesCount = document.getElementById('totalScenesCount');
+
+        const q = query(collection(db, "movies"), orderBy("dateAdded", "desc"));
+
+        onSnapshot(q, (snapshot) => {
+            manageMoviesTableBody.innerHTML = "";
+            dashboardTableBody.innerHTML = "";
+            totalScenesCount.innerText = snapshot.size; // Updates Dashboard Stat automatically
+
+            if(snapshot.empty) {
+                manageMoviesTableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No movies published yet. Add one!</td></tr>";
+                dashboardTableBody.innerHTML = "<tr><td colspan='3' style='text-align:center;'>No recent activity.</td></tr>";
+                return;
             }
 
-            // Handle UI Changes based on Login Status
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // Logged In State
-                    adminName.innerText = user.displayName;
-                    if(user.photoURL) adminAvatar.src = user.photoURL;
-                    
-                    sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Sign Out';
-                    sidebarAuthBtn.onclick = () => signOut(auth);
-                    topbarAuthBtn.onclick = null; // Remove modal click if logged in
-                } else {
-                    // Logged Out State
-                    adminName.innerText = "Not Logged In";
-                    adminAvatar.src = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"; // Default avatar
-                    
-                    sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
-                    
-                    const openModal = (e) => {
-                        e.preventDefault();
-                        document.getElementById('authModal').classList.add('active');
-                    };
-                    sidebarAuthBtn.onclick = openModal;
-                    topbarAuthBtn.onclick = openModal;
+            snapshot.forEach((documentSnapshot) => {
+                const movie = documentSnapshot.data();
+                const docId = documentSnapshot.id;
+
+                // Create the little platform badges
+                let platformsHTML = '';
+                if(movie.platforms) {
+                    if(movie.platforms.netflix) platformsHTML += `<span class="platform-badge" style="color: #E50914;">Netflix</span>`;
+                    if(movie.platforms.prime) platformsHTML += `<span class="platform-badge" style="color: #00A8E1;">Prime</span>`;
+                    if(movie.platforms.hotstar) platformsHTML += `<span class="platform-badge" style="color: #032cfc;">Hotstar</span>`;
+                    if(movie.platforms.aha) platformsHTML += `<span class="platform-badge" style="color: #ff6600;">Aha</span>`;
+                    if(movie.platforms.apple) platformsHTML += `<span class="platform-badge" style="color: #a0a0a0;">Apple TV</span>`;
                 }
+                if(platformsHTML === '') platformsHTML = '<span class="text-muted">None</span>';
+
+                // Build Row for "Manage Movies" Table
+                manageMoviesTableBody.innerHTML += `
+                    <tr>
+                        <td class="td-movie">
+                            <img src="${movie.poster}" class="td-poster" alt="poster">
+                            <strong>${movie.title}</strong>
+                        </td>
+                        <td>${movie.cast || 'N/A'}</td>
+                        <td>${platformsHTML}</td>
+                        <td>
+                            <button class="action-btn edit" onclick="alert('To edit, please delete this scene and re-upload it with changes.')"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="action-btn delete" onclick="deleteMovie('${docId}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+
+                // Build Row for "Dashboard" Table (simplified)
+                dashboardTableBody.innerHTML += `
+                    <tr>
+                        <td class="td-movie">
+                            <img src="${movie.poster}" class="td-poster" alt="poster">
+                            <strong>${movie.title}</strong>
+                        </td>
+                        <td>${movie.review ? movie.review.substring(0, 30) + '...' : 'N/A'}</td>
+                        <td>${platformsHTML}</td>
+                    </tr>
+                `;
             });
+        }, (error) => {
+            console.log("Waiting for Firebase Connection...");
+        });
 
-            // --- PUBLISH LOGIC ---
-            document.getElementById('addMovieForm').addEventListener('submit', async (e) => {
-                e.preventDefault(); 
-                
-                // Optional: Check if logged in before publishing
-                if (!auth.currentUser) {
-                    alert("You must be signed in to publish!");
-                    document.getElementById('authModal').classList.add('active');
-                    return;
-                }
-
-                const btn = document.getElementById('submitBtn');
-                btn.innerText = "Saving to Database...";
-                btn.style.opacity = "0.7";
-
+        // --- DELETE LOGIC (Attached to window so HTML buttons can click it) ---
+        window.deleteMovie = async (docId) => {
+            if(confirm("Are you sure you want to permanently delete this scene?")) {
                 try {
-                    const platforms = {
-                        netflix: document.getElementById('platNetflix').checked,
-                        prime: document.getElementById('platPrime').checked,
-                        hotstar: document.getElementById('platHotstar').checked,
-                        aha: document.getElementById('platAha').checked,
-                        apple: document.getElementById('platApple').checked
-                    };
-
-                    const docRef = await addDoc(collection(db, "movies"), {
-                        title: document.getElementById('movieTitle').value,
-                        cast: document.getElementById('leadCast').value,
-                        review: document.getElementById('shortReview').value,
-                        poster: document.getElementById('posterUrl').value,
-                        trailer: document.getElementById('trailerUrl').value,
-                        platforms: platforms,
-                        dateAdded: new Date().toISOString()
-                    });
-
-                    alert("Movie published successfully to Database! (ID: " + docRef.id + ")");
-                    document.getElementById('addMovieForm').reset(); 
-                    switchView('movies'); 
-
+                    await deleteDoc(doc(db, "movies", docId));
+                    // It will automatically disappear from the table because of onSnapshot!
                 } catch (error) {
-                    console.error("Error adding document: ", error);
-                    alert("Error saving to database. Did you paste your Firebase keys correctly?");
-                } finally {
-                    btn.innerHTML = 'Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i>';
-                    btn.style.opacity = "1";
+                    alert("Error deleting movie: " + error.message);
                 }
-            });
+            }
+        };
 
-        } catch(e) {
-            console.log("Waiting for actual Firebase config keys...");
-        }
+        // --- PUBLISH LOGIC ---
+        document.getElementById('addMovieForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            if (!auth.currentUser) {
+                alert("You must be signed in to publish!");
+                document.getElementById('authModal').classList.add('active');
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Saving to Database...";
+            btn.style.opacity = "0.7";
+
+            try {
+                const platforms = {
+                    netflix: document.getElementById('platNetflix').checked,
+                    prime: document.getElementById('platPrime').checked,
+                    hotstar: document.getElementById('platHotstar').checked,
+                    aha: document.getElementById('platAha').checked,
+                    apple: document.getElementById('platApple').checked
+                };
+
+                await addDoc(collection(db, "movies"), {
+                    title: document.getElementById('movieTitle').value,
+                    cast: document.getElementById('leadCast').value,
+                    review: document.getElementById('shortReview').value,
+                    poster: document.getElementById('posterUrl').value,
+                    trailer: document.getElementById('trailerUrl').value,
+                    platforms: platforms,
+                    dateAdded: new Date().toISOString()
+                });
+
+                alert("Movie published successfully!");
+                document.getElementById('addMovieForm').reset(); 
+                switchView('movies'); 
+
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Error saving to database. Did you paste your Firebase keys correctly?");
+            } finally {
+                btn.innerHTML = 'Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i>';
+                btn.style.opacity = "1";
+            }
+        });
     </script>
 </body>
 </html>
