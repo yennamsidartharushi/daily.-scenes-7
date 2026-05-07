@@ -1,15 +1,17 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | daily.scenes7</title>
+    
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="daily. scenes 7" />
     <link rel="manifest" href="site.webmanifest" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -116,9 +118,8 @@
 
         <div class="nav-links" id="navMenu">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="collections.html" class="nav-link">Collections</a>
+            <a href="about.html" class="nav-link">About</a>
             <a href="contact.html" class="nav-link active">Contact</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
             <a href="admin.html" class="nav-link" id="navProfileName" style="color: white; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;">Sign In</a>
             <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
         </div>
@@ -231,16 +232,16 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // !!! PASTE YOUR FIREBASE KEYS HERE !!!
+        // YOUR FIREBASE KEYS
         const firebaseConfig = {
-  apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
-  authDomain: "dailyscenes7.firebaseapp.com",
-  projectId: "dailyscenes7",
-  storageBucket: "dailyscenes7.firebasestorage.app",
-  messagingSenderId: "381272866401",
-  appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
-  measurementId: "G-7PYNRBP33W"
-};
+          apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
+          authDomain: "dailyscenes7.firebaseapp.com",
+          projectId: "dailyscenes7",
+          storageBucket: "dailyscenes7.firebasestorage.app",
+          messagingSenderId: "381272866401",
+          appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
+          measurementId: "G-7PYNRBP33W"
+        };
 
         try {
             const app = initializeApp(firebaseConfig);
