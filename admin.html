@@ -216,9 +216,9 @@
                     <div class="form-grid">
                         
                         <div class="form-group full-width">
-                            <label>Movie Title (Type name and click Auto-Fill)</label>
+                            <label>Movie Title (Type exact name OR paste IMDb ID, e.g. tt20850528)</label>
                             <div style="display: flex; gap: 15px;">
-                                <input type="text" id="movieTitle" placeholder="e.g. Pushpa" required style="flex: 1;">
+                                <input type="text" id="movieTitle" placeholder="e.g. tt20850528 or Pushpa" required style="flex: 1;">
                                 <button type="button" id="fetchMovieBtn" class="btn-primary" style="padding: 0 25px; font-size: 0.95rem;">
                                     <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Fill Details
                                 </button>
@@ -316,7 +316,7 @@
 };
 
         // !!! 2. PASTE YOUR OMDB API KEY HERE !!!
-        const OMDB_API_KEY = "http://www.omdbapi.com/?i=tt3896198&apikey=da743c21"; 
+        const OMDB_API_KEY = "da743c21"; 
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -326,29 +326,39 @@
         // --- THE MASTER ADMIN EMAIL ---
         const ADMIN_EMAIL = "yennamyennamsidhu@gmail.com";
 
-        // --- OMDB AUTO-FILL MAGIC ---
+        // --- OMDB AUTO-FILL MAGIC (UPDATED WITH IMDB ID CHEAT CODE) ---
         const fetchMovieBtn = document.getElementById('fetchMovieBtn');
         fetchMovieBtn.addEventListener('click', async () => {
-            const title = document.getElementById('movieTitle').value;
-            if (!title) {
-                alert("Please type a movie title first!");
+            const searchInput = document.getElementById('movieTitle').value.trim();
+            if (!searchInput) {
+                alert("Please type a movie title or IMDb ID first!");
                 return;
             }
 
             fetchMovieBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Fetching...';
             
             try {
-                const response = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&apikey=${OMDB_API_KEY}`);
+                // CHEAT CODE: If it starts with 'tt', search by exact IMDb ID instead of name!
+                let apiUrl = "";
+                if (searchInput.startsWith("tt")) {
+                    apiUrl = `https://www.omdbapi.com/?i=${searchInput}&apikey=${OMDB_API_KEY}`;
+                } else {
+                    apiUrl = `https://www.omdbapi.com/?t=${encodeURIComponent(searchInput)}&apikey=${OMDB_API_KEY}`;
+                }
+
+                const response = await fetch(apiUrl);
                 const data = await response.json();
 
                 if (data.Response === "True") {
+                    // It worked! Fill the boxes.
+                    document.getElementById('movieTitle').value = data.Title; // Replaces ID with real title
                     document.getElementById('leadCast').value = data.Actors;
                     document.getElementById('shortReview').value = `${data.Genre} • ${data.Plot}`;
                     if (data.Poster !== "N/A") {
                         document.getElementById('posterUrl').value = data.Poster;
                     }
                     
-                    // Try to guess the category dropdown
+                    // Auto-pick the dropdown
                     const genreLower = data.Genre.toLowerCase();
                     const categorySelect = document.getElementById('movieCategory');
                     if (genreLower.includes('action')) categorySelect.value = 'action';
@@ -359,11 +369,12 @@
                     else categorySelect.value = 'drama';
 
                 } else {
-                    alert("OMDb Error: " + data.Error);
+                    // Smart Error Message
+                    alert("OMDb Failed: " + data.Error + "\n\nPRO-TIP: If the name isn't working, go to imdb.com, find the movie, and paste its ID (like tt20850528) into the Title box instead!");
                 }
             } catch (error) {
                 console.error(error);
-                alert("Error fetching details. Is your API key correct?");
+                alert("Error fetching details. Did you paste your OMDB_API_KEY into the code?");
             } finally {
                 fetchMovieBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Fill Details';
             }
