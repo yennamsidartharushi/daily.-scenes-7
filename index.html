@@ -221,9 +221,8 @@
 
         <div class="nav-links" id="navMenu">
             <a href="index.html" class="nav-link active">Home</a>
-            <a href="collections.html" class="nav-link">Collections</a>
+            <a href="about.html" class="nav-link">About</a>
             <a href="contact.html" class="nav-link">Contact</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
             <a href="#" class="nav-link" id="openAuthModal" style="color: white; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;">Sign In</a>
             <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
         </div>
@@ -516,16 +515,16 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
+        // !!! YOUR REAL FIREBASE KEYS !!!
         const firebaseConfig = {
-  apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
-  authDomain: "dailyscenes7.firebaseapp.com",
-  projectId: "dailyscenes7",
-  storageBucket: "dailyscenes7.firebasestorage.app",
-  messagingSenderId: "381272866401",
-  appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
-  measurementId: "G-7PYNRBP33W"
-};
+          apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
+          authDomain: "dailyscenes7.firebaseapp.com",
+          projectId: "dailyscenes7",
+          storageBucket: "dailyscenes7.firebasestorage.app",
+          messagingSenderId: "381272866401",
+          appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
+          measurementId: "G-7PYNRBP33W"
+        };
 
         try {
             const app = initializeApp(firebaseConfig);
