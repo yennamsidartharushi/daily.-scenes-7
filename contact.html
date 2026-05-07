@@ -1,42 +1,41 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | daily.scenes7</title>
+    <title>Contact Us | daily.scenes7</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- Core Variables & Global Styles (Same as index) --- */
+        /* --- Core Variables (Matches index.html) --- */
         :root {
             --bg-dark: #050505;
             --bg-card: #111111;
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
             --accent: #e50914; 
+            --accent-hover: #ff2c37;
             --glass: rgba(10, 10, 10, 0.7);
             --border: rgba(255, 255, 255, 0.05);
         }
 
+        /* --- Global Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
         h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
-        /* --- Navigation --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; border-bottom: 1px solid var(--border);
-        }
-        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 36px; height: 36px; filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4)); }
-        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.6rem; display: flex; align-items: baseline; }
+        /* --- Navigation & Mobile Menu --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.3s ease; }
+        .brand:hover { opacity: 0.9; }
+        .logo-icon { width: 36px; height: 36px; filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4)); transition: transform 0.4s ease; }
+        .brand:hover .logo-icon { transform: scale(1.1) rotate(90deg); filter: drop-shadow(0 6px 15px rgba(229, 9, 20, 0.8)); }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.6rem; letter-spacing: -0.5px; display: flex; align-items: baseline; }
         .logo-daily { color: #ffffff; font-weight: 500; }
         .logo-scenes { color: var(--accent); font-weight: 800; }
         .logo-7 { color: transparent; -webkit-text-stroke: 1.5px var(--accent); font-weight: 800; font-style: italic; margin-left: 2px; font-size: 1.8rem; }
@@ -44,79 +43,55 @@
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
+        .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
+        .social-btn:hover { color: var(--accent); }
+        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; z-index: 101; transition: transform 0.3s ease; }
 
-        /* --- Contact Layout --- */
-        .contact-section {
-            padding: 150px 5% 80px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle at top right, #1a0507 0%, var(--bg-dark) 60%);
-        }
+        /* --- Page Header --- */
+        .page-header { padding: 150px 5% 60px; text-align: center; background: radial-gradient(circle at 50% 0%, #2a080a 0%, var(--bg-dark) 70%); }
+        .page-header h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 15px; }
+        .page-header p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
 
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 50px;
-            max-width: 1100px;
-            width: 100%;
-            background: linear-gradient(145deg, #121212, #0a0a0a);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-
-        /* Left Side: Info */
-        .contact-info {
-            padding: 50px;
-            background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), transparent);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .contact-info h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 15px; }
-        .contact-info p { color: var(--text-muted); font-size: 1rem; margin-bottom: 40px; }
+        /* --- Contact Section Layout --- */
+        .contact-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; max-width: 1200px; margin: 0 auto 80px auto; padding: 0 5%; flex: 1; }
         
-        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; color: var(--text-muted); }
-        .info-item i { width: 40px; height: 40px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--accent); font-size: 1.2rem; }
+        /* Contact Info Column */
+        .contact-info { background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--border); }
+        .info-box { margin-bottom: 30px; display: flex; gap: 20px; align-items: flex-start; }
+        .info-icon { background: rgba(229, 9, 20, 0.1); color: var(--accent); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+        .info-details h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .info-details p { color: var(--text-muted); font-size: 0.95rem; }
+        .info-details a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .info-details a:hover { color: white; }
+
+        /* Contact Form Column */
+        .contact-form-wrapper { background: linear-gradient(145deg, #111 0%, #0a0a0a 100%); padding: 40px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
+        .form-group input, .form-group textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: white; padding: 15px; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 1rem; transition: all 0.3s; outline: none; }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); box-shadow: 0 0 15px rgba(229, 9, 20, 0.2); }
         
-        .social-grid { display: flex; gap: 15px; margin-top: 20px; }
-        .social-grid a { width: 45px; height: 45px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 1.2rem; transition: all 0.3s; }
-        .social-grid a:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
+        .btn-submit { background: var(--accent); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-submit:hover { background: var(--accent-hover); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
 
-        /* Right Side: Form */
-        .contact-form-wrapper { padding: 50px; }
-        .form-group { margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px; }
-        .form-group label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
-        .form-control {
-            width: 100%; padding: 15px 20px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border); border-radius: 12px; color: white;
-            font-family: 'Inter', sans-serif; font-size: 1rem; outline: none; transition: all 0.3s;
-        }
-        .form-control:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
-        textarea.form-control { resize: vertical; min-height: 150px; }
-        
-        .btn-submit {
-            background: linear-gradient(135deg, #E50914, #ff2c37); border: none;
-            padding: 16px 30px; border-radius: 12px; color: white; font-family: 'Inter', sans-serif;
-            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s;
-            width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-        .btn-submit:hover { box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4); transform: translateY(-2px); }
+        /* --- Footer --- */
+        footer { padding: 60px 5% 30px; background: linear-gradient(to top, #080808, var(--bg-dark)); border-top: 1px solid var(--border); color: var(--text-muted); margin-top: auto; }
+        .footer-content { display: flex; justify-content: center; align-items: center; text-align: center; margin-bottom: 40px; max-width: 1400px; margin: 0 auto 40px; }
+        .footer-brand p { font-size: 0.9rem; margin-top: 10px; }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Success Message styling */
-        #result { margin-top: 15px; font-weight: 500; text-align: center; font-size: 0.9rem; }
-        .text-success { color: #00ff88; }
-        .text-error { color: #ff5252; }
-
+        /* --- Mobile Adjustments --- */
         @media (max-width: 900px) {
             .contact-container { grid-template-columns: 1fr; }
-            .contact-info { padding: 40px 30px; }
-            .contact-form-wrapper { padding: 40px 30px; }
         }
-        @media (max-width: 768px) { .nav-link { display: none; } }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2.5rem; }
+            .mobile-menu-btn { display: block; }
+            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; border-bottom: 1px solid var(--border); gap: 15px; opacity: 0; transform: translateY(-10px); pointer-events: none; transition: all 0.3s ease; }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-link { display: block; width: 100%; text-align: center; padding: 10px 0; }
+            .social-btn { justify-content: center; width: 100%; padding: 10px 0; }
+        }
     </style>
 </head>
 <body>
@@ -127,141 +102,156 @@
                 <rect x="4" y="4" width="42" height="42" rx="10" fill="none" stroke="url(#logo-grad)" stroke-width="3"/>
                 <path d="M20 16 L36 25 L20 34 Z" fill="url(#logo-grad)"/>
                 <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                <defs>
-                    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ff2c37" />
-                        <stop offset="100%" stop-color="#E50914" />
-                    </linearGradient>
-                </defs>
+                <defs><linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff2c37" /><stop offset="100%" stop-color="#E50914" /></linearGradient></defs>
             </svg>
             <div class="logo-text">
                 <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
             </div>
         </a>
 
-        <div class="nav-links">
+        <div class="nav-links" id="navMenu">
             <a href="index.html" class="nav-link">Home</a>
             <a href="collections.html" class="nav-link">Collections</a>
             <a href="contact.html" class="nav-link active">Contact</a>
+            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="admin.html" class="nav-link" id="navProfileName" style="color: white; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;">Sign In</a>
+            <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
         </div>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
     </nav>
 
-    <section class="contact-section">
-        <div class="contact-container">
-            
-            <div class="contact-info">
-                <div>
-                    <h1>Get in Touch</h1>
-                    <p>Want to request a specific movie scene, report a broken link, or just talk cinema? Drop us a message below.</p>
-                    
-                    <div class="info-item">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span>hello@dailyscenes7.site</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span>Global Cinema Network</span>
-                    </div>
-                </div>
+    <header class="page-header">
+        <h1>Get in Touch</h1>
+        <p>Want to request a movie scene? Found a broken link? Or just want to talk cinema? Drop us a message below.</p>
+    </header>
 
-                <div>
-                    <h3 style="font-size: 1rem; color: white; margin-bottom: 10px;">Follow the Curation</h3>
-                    <div class="social-grid">
-                        <a href="https://instagram.com/daily.scenes7" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
+    <main class="contact-container">
+        
+        <div class="contact-info">
+            <div class="info-box">
+                <div class="info-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                <div class="info-details">
+                    <h3>Email Us</h3>
+                    <p><a href="mailto:yennamyennamsidhu@gmail.com">yennamyennamsidhu@gmail.com</a></p>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-icon"><i class="fa-brands fa-instagram"></i></div>
+                <div class="info-details">
+                    <h3>Instagram</h3>
+                    <p><a href="https://instagram.com/daily.scenes7" target="_blank">@daily.scenes7</a></p>
                 </div>
             </div>
 
-            <div class="contact-form-wrapper">
-                
-                <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
-                    
-                    <input type="hidden" name="access_key" value="3b4bde7a-cdf7-4868-b9aa-71b081b6bed7">
-                    
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="subject">Topic</label>
-                        <select id="subject" name="subject" class="form-control" required>
-                            <option value="Scene Request">Scene Request</option>
-                            <option value="General Inquiry">General Inquiry</option>
-                            <option value="Bug Report">Report a Broken Link</option>
-                            <option value="Business/Collab">Business & Collaboration</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" class="form-control" placeholder="Tell us what scene you want to see next..." required></textarea>
-                    </div>
-
-                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-                    <button type="submit" class="btn-submit">
-                        Send Message <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-
-                    <p id="result"></p>
-                </form>
-
+            <div class="info-box">
+                <div class="info-icon"><i class="fa-solid fa-film"></i></div>
+                <div class="info-details">
+                    <h3>Scene Requests</h3>
+                    <p>Have a favorite movie edit you want featured? Include the movie name and timestamp in your message!</p>
+                </div>
             </div>
         </div>
-    </section>
+
+        <div class="contact-form-wrapper">
+            
+            <form action="https://api.web3forms.com/submit" method="POST">
+                
+                <input type="hidden" name="access_key" value="3b4bde7a-cdf7-4868-b9aa-71b081b6bed7">
+                
+                <input type="hidden" name="autoresponse" value="Hey there! Thanks for reaching out to daily.scenes7. We have received your message and will get back to you as soon as possible. Keep enjoying the cinema! 🎬">
+                <input type="hidden" name="from_name" value="daily.scenes7 Team">
+                <input type="hidden" name="subject" value="New Website Message | daily.scenes7">
+                
+                <input type="checkbox" name="botcheck" id="" style="display: none;">
+
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" name="name" id="name" placeholder="John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Your Email Address</label>
+                    <input type="email" name="email" id="email" placeholder="john@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Your Message or Request</label>
+                    <textarea name="message" id="message" rows="5" placeholder="I would love to see an edit of the climax scene from..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    Send Message <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-text" style="font-size: 1.2rem; justify-content: center;">
+                    <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
+                </div>
+                <p>Curating the soul of cinema, one scene at a time.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 daily.scenes7 &bull; All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        const form = document.getElementById('contactForm');
-        const result = document.getElementById('result');
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
-            
-            result.innerHTML = "Sending message...";
-            result.className = "text-muted";
-
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-            .then(async (response) => {
-                let json = await response.json();
-                if (response.status == 200) {
-                    result.innerHTML = "Message sent successfully! We'll be in touch.";
-                    result.className = "text-success";
-                    form.reset();
-                } else {
-                    console.log(response);
-                    result.innerHTML = json.message;
-                    result.className = "text-error";
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                result.innerHTML = "Something went wrong. Please try again.";
-                result.className = "text-error";
-            })
-            .then(function() {
-                setTimeout(() => {
-                    result.style.display = "none";
-                }, 5000);
-            });
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.classList.replace('fa-bars', 'fa-xmark');
+                    } else {
+                        icon.classList.replace('fa-xmark', 'fa-bars');
+                    }
+                });
+            }
         });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // !!! PASTE YOUR FIREBASE KEYS HERE !!!
+        const firebaseConfig = {
+  apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
+  authDomain: "dailyscenes7.firebaseapp.com",
+  projectId: "dailyscenes7",
+  storageBucket: "dailyscenes7.firebasestorage.app",
+  messagingSenderId: "381272866401",
+  appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
+  measurementId: "G-7PYNRBP33W"
+};
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const navProfileName = document.getElementById('navProfileName');
+
+            // If the admin is logged in, change the "Sign In" button to their name
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    navProfileName.innerText = user.displayName.split(' ')[0]; 
+                    navProfileName.style.borderColor = "#00ff88"; 
+                }
+            });
+        } catch(e) {
+            console.log("Waiting for Firebase configuration.");
+        }
     </script>
 </body>
 </html>
