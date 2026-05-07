@@ -110,7 +110,7 @@
         .checkbox-group { display: flex; gap: 20px; margin-top: 10px; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: white; }
 
-        /* --- Premium Auth Modal --- */
+        /* --- Premium Auth Modal (UN-CLOSABLE) --- */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .auth-overlay.active { opacity: 1; pointer-events: auto; }
         .auth-box { background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; width: 90%; max-width: 420px; padding: 45px 35px 35px; position: relative; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.8); transform: scale(0.95); transition: transform 0.3s ease; }
@@ -119,7 +119,7 @@
         @keyframes floatMascot { 0%, 100% { transform: translateY(0) rotate(-10deg); } 50% { transform: translateY(-12px) rotate(-2deg); } }
         .auth-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
         .auth-subtitle { font-size: 0.95rem; color: #a0a0a0; margin-bottom: 25px; line-height: 1.5; }
-        .social-auth-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; color: white; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .social-auth-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: #1a1a1f; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; color: white; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-bottom: 12px; }
         .social-auth-btn:hover { background: #25252b; border-color: rgba(255,255,255,0.1); }
     </style>
 </head>
@@ -214,10 +214,17 @@
             <div class="table-container" style="padding: 40px;">
                 <form id="addMovieForm">
                     <div class="form-grid">
-                        <div class="form-group">
-                            <label>Movie Title</label>
-                            <input type="text" id="movieTitle" placeholder="e.g. Inception" required>
+                        
+                        <div class="form-group full-width">
+                            <label>Movie Title (Type name and click Auto-Fill)</label>
+                            <div style="display: flex; gap: 15px;">
+                                <input type="text" id="movieTitle" placeholder="e.g. Pushpa" required style="flex: 1;">
+                                <button type="button" id="fetchMovieBtn" class="btn-primary" style="padding: 0 25px; font-size: 0.95rem;">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Fill Details
+                                </button>
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label>Lead Cast</label>
                             <input type="text" id="leadCast" placeholder="e.g. Leonardo DiCaprio">
@@ -259,7 +266,6 @@
                         </div>
                     </div>
                     <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; text-align: right;">
-                        <button type="button" style="background:none; border:none; color:#888; margin-right: 20px; cursor:pointer;" onclick="switchView('dashboard')">Cancel</button>
                         <button type="submit" class="btn-primary" id="submitBtn" style="display:inline-flex;">Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i></button>
                     </div>
                 </form>
@@ -298,7 +304,7 @@
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // !!! IMPORTANT: PASTE YOUR REAL FIREBASE KEYS HERE !!!
+        // !!! 1. PASTE YOUR REAL FIREBASE KEYS HERE !!!
         const firebaseConfig = {
   apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
   authDomain: "dailyscenes7.firebaseapp.com",
@@ -308,6 +314,10 @@
   appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
   measurementId: "G-7PYNRBP33W"
 };
+
+        // !!! 2. PASTE YOUR OMDB API KEY HERE !!!
+        const OMDB_API_KEY = "http://www.omdbapi.com/?i=tt3896198&apikey=da743c21"; 
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -315,6 +325,49 @@
 
         // --- THE MASTER ADMIN EMAIL ---
         const ADMIN_EMAIL = "yennamyennamsidhu@gmail.com";
+
+        // --- OMDB AUTO-FILL MAGIC ---
+        const fetchMovieBtn = document.getElementById('fetchMovieBtn');
+        fetchMovieBtn.addEventListener('click', async () => {
+            const title = document.getElementById('movieTitle').value;
+            if (!title) {
+                alert("Please type a movie title first!");
+                return;
+            }
+
+            fetchMovieBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Fetching...';
+            
+            try {
+                const response = await fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(title)}&apikey=${OMDB_API_KEY}`);
+                const data = await response.json();
+
+                if (data.Response === "True") {
+                    document.getElementById('leadCast').value = data.Actors;
+                    document.getElementById('shortReview').value = `${data.Genre} • ${data.Plot}`;
+                    if (data.Poster !== "N/A") {
+                        document.getElementById('posterUrl').value = data.Poster;
+                    }
+                    
+                    // Try to guess the category dropdown
+                    const genreLower = data.Genre.toLowerCase();
+                    const categorySelect = document.getElementById('movieCategory');
+                    if (genreLower.includes('action')) categorySelect.value = 'action';
+                    else if (genreLower.includes('thriller')) categorySelect.value = 'thriller';
+                    else if (genreLower.includes('comedy')) categorySelect.value = 'comedy';
+                    else if (genreLower.includes('horror')) categorySelect.value = 'horror';
+                    else if (genreLower.includes('romance')) categorySelect.value = 'rom-com';
+                    else categorySelect.value = 'drama';
+
+                } else {
+                    alert("Movie not found! Check the spelling.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Error fetching details. Is your API key correct?");
+            } finally {
+                fetchMovieBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Fill Details';
+            }
+        });
 
         // --- AUTHENTICATION LOGIC ---
         const googleLoginBtn = document.getElementById('googleLoginBtn');
@@ -327,10 +380,8 @@
             googleLoginBtn.addEventListener('click', async () => {
                 try {
                     const result = await signInWithPopup(auth, provider);
-                    
-                    // SECURITY CHECK: Is it the admin email?
                     if (result.user.email !== ADMIN_EMAIL) {
-                        await signOut(auth); // Kick them out immediately
+                        await signOut(auth);
                         alert("Access Denied: Only the owner can access this panel.");
                     } else {
                         document.getElementById('authModal').classList.remove('active');
@@ -343,23 +394,19 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user && user.email === ADMIN_EMAIL) {
-                // Logged In Admin State
                 adminName.innerText = user.displayName;
                 if(user.photoURL) adminAvatar.src = user.photoURL;
                 sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Sign Out';
                 sidebarAuthBtn.onclick = () => {
                     signOut(auth);
-                    window.location.reload(); // Reload to force login screen
+                    window.location.reload(); 
                 };
                 topbarAuthBtn.onclick = null; 
             } else {
-                // Logged Out / Unauthorized State
-                if (user) signOut(auth); // Failsafe
+                if (user) signOut(auth); 
                 adminName.innerText = "Not Logged In";
                 adminAvatar.src = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"; 
                 sidebarAuthBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
-                
-                // Force the modal to stay open if they aren't logged in
                 document.getElementById('authModal').classList.add('active');
             }
         });
@@ -368,7 +415,6 @@
         const manageMoviesTableBody = document.getElementById('manageMoviesTableBody');
         const dashboardTableBody = document.getElementById('dashboardTableBody');
         const totalScenesCount = document.getElementById('totalScenesCount');
-
         const q = query(collection(db, "movies"), orderBy("dateAdded", "desc"));
 
         onSnapshot(q, (snapshot) => {
@@ -396,7 +442,6 @@
                 }
                 if(platformsHTML === '') platformsHTML = '<span class="text-muted">None</span>';
 
-                // We display the new category in the table too!
                 const categoryDisplay = movie.category ? movie.category.toUpperCase() : 'N/A';
 
                 manageMoviesTableBody.innerHTML += `
@@ -425,8 +470,6 @@
                     </tr>
                 `;
             });
-        }, (error) => {
-            console.log("Waiting for Firebase Connection...");
         });
 
         // --- DELETE LOGIC ---
@@ -454,10 +497,8 @@
             btn.style.opacity = "0.7";
 
             try {
-                // AUTO-CONVERT YOUTUBE LINKS
                 let rawTrailer = document.getElementById('trailerUrl').value;
                 let embedUrl = rawTrailer;
-                
                 if (rawTrailer.includes("youtu.be/")) {
                     let videoId = rawTrailer.split("youtu.be/")[1].split("?")[0];
                     embedUrl = "https://www.youtube.com/embed/" + videoId;
