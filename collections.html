@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collections | daily.scenes7</title>
+    
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="daily. scenes 7" />
     <link rel="manifest" href="site.webmanifest" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -24,29 +26,33 @@
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
             --accent: #e50914; 
+            --accent-hover: #ff2c37;
             --glass: rgba(10, 10, 10, 0.7);
             --border: rgba(255, 255, 255, 0.05);
         }
 
         /* --- Global Styles --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3, .brand { font-family: 'Poppins', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
 
-        /* --- Navigation --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; border-bottom: 1px solid var(--border);
-        }
-        .brand { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .brand i { color: var(--accent); }
+        /* --- Navigation & Mobile Menu --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid var(--border); }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.3s ease; }
+        .brand:hover { opacity: 0.9; }
+        .logo-icon { width: 36px; height: 36px; filter: drop-shadow(0 4px 10px rgba(229, 9, 20, 0.4)); transition: transform 0.4s ease; }
+        .brand:hover .logo-icon { transform: scale(1.1) rotate(90deg); filter: drop-shadow(0 6px 15px rgba(229, 9, 20, 0.8)); }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.6rem; letter-spacing: -0.5px; display: flex; align-items: baseline; }
+        .logo-daily { color: #ffffff; font-weight: 500; }
+        .logo-scenes { color: var(--accent); font-weight: 800; }
+        .logo-7 { color: transparent; -webkit-text-stroke: 1.5px var(--accent); font-weight: 800; font-style: italic; margin-left: 2px; font-size: 1.8rem; }
+        
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
         .social-btn { color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; transition: color 0.3s ease; }
         .social-btn:hover { color: var(--accent); }
+        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; z-index: 101; transition: transform 0.3s ease; }
 
         /* --- Hero Section --- */
         .hero { padding: 160px 5% 60px; text-align: center; background: radial-gradient(circle at 50% -20%, #1a0608 0%, var(--bg-dark) 60%); }
@@ -62,6 +68,7 @@
             max-width: 1400px;
             margin: 0 auto;
             opacity: 0;
+            flex: 1;
             animation: fadeInUp 0.8s ease-out 0.4s forwards;
         }
 
@@ -123,32 +130,54 @@
         .collection-desc { font-size: 0.95rem; color: var(--text-muted); }
 
         /* --- Footer --- */
-        footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+        footer { padding: 60px 5% 30px; background: linear-gradient(to top, #080808, var(--bg-dark)); border-top: 1px solid var(--border); color: var(--text-muted); margin-top: auto; }
+        .footer-content { display: flex; justify-content: center; align-items: center; text-align: center; flex-wrap: wrap; gap: 30px; margin-bottom: 40px; max-width: 1400px; margin: 0 auto 40px; }
+        .footer-brand p { font-size: 0.9rem; margin-top: 10px; max-width: 300px; margin-left: auto; margin-right: auto; }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
 
         /* --- Animations --- */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Mobile --- */
+        @media (max-width: 900px) {
+            .collections-grid { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .collections-grid { grid-template-columns: 1fr; }
-            .nav-link { display: none; }
             .collection-card { aspect-ratio: 16 / 9; }
+            .mobile-menu-btn { display: block; }
+            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; padding: 20px 0; border-bottom: 1px solid var(--border); gap: 15px; opacity: 0; transform: translateY(-10px); pointer-events: none; transition: all 0.3s ease; }
+            .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+            .nav-link { display: block; width: 100%; text-align: center; padding: 10px 0; }
+            .social-btn { justify-content: center; width: 100%; padding: 10px 0; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="brand"><i class="fa-solid fa-film"></i> daily.scenes7</a>
-        <div class="nav-links">
+        <a href="index.html" class="brand">
+            <svg class="logo-icon" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="42" height="42" rx="10" fill="none" stroke="url(#logo-grad)" stroke-width="3"/>
+                <path d="M20 16 L36 25 L20 34 Z" fill="url(#logo-grad)"/>
+                <circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <defs><linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff2c37" /><stop offset="100%" stop-color="#E50914" /></linearGradient></defs>
+            </svg>
+            <div class="logo-text">
+                <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
+            </div>
+        </a>
+
+        <div class="nav-links" id="navMenu">
             <a href="index.html" class="nav-link">Home</a>
-            <a href="collections.html" class="nav-link">Collections</a>
+            <a href="collections.html" class="nav-link active">Collections</a>
             <a href="about.html" class="nav-link">About</a>
             <a href="contact.html" class="nav-link">Contact</a>
-            <a href="faq.html" class="nav-link">FAQ</a>
+            <a href="admin.html" class="nav-link" id="navProfileName" style="color: white; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;">Sign In</a>
             <a href="https://instagram.com/daily.scenes7" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> Follow</a>
         </div>
+
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
     </nav>
 
     <section class="hero">
@@ -197,8 +226,68 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 daily.scenes7 &bull; Cinema in seconds.</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-text" style="font-size: 1.2rem; justify-content: center;">
+                    <span class="logo-daily">daily.</span><span class="logo-scenes">scenes</span><span class="logo-7">7</span>
+                </div>
+                <p>Curating the soul of cinema, one scene at a time.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 daily.scenes7 &bull; All Rights Reserved.</p>
+        </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.classList.replace('fa-bars', 'fa-xmark');
+                    } else {
+                        icon.classList.replace('fa-xmark', 'fa-bars');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // YOUR FIREBASE KEYS
+        const firebaseConfig = {
+          apiKey: "AIzaSyDl_dV534wivEV27YGYL_qF3cKIHHUH5uY",
+          authDomain: "dailyscenes7.firebaseapp.com",
+          projectId: "dailyscenes7",
+          storageBucket: "dailyscenes7.firebasestorage.app",
+          messagingSenderId: "381272866401",
+          appId: "1:381272866401:web:3bef095e358ca2cfcd3420",
+          measurementId: "G-7PYNRBP33W"
+        };
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const navProfileName = document.getElementById('navProfileName');
+
+            // If the admin is logged in, change the "Sign In" button to their name
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    navProfileName.innerText = user.displayName.split(' ')[0]; 
+                    navProfileName.style.borderColor = "#00ff88"; 
+                }
+            });
+        } catch(e) {
+            console.log("Waiting for Firebase configuration.");
+        }
+    </script>
 </body>
 </html>
