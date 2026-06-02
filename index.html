@@ -98,12 +98,17 @@
         .brand-logo.hotstar { height: 50px; } 
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- Search & Filter Bar --- */
+        /* --- Search & Filter Bar (UPDATED for Surprise Me) --- */
         .controls-container { max-width: 900px; margin: 0 auto 50px auto; padding: 0 5%; }
-        .search-box { position: relative; margin-bottom: 20px; }
+        .search-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .search-box { position: relative; flex: 1; }
         .search-box i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
         .search-input { width: 100%; padding: 16px 20px 16px 50px; border-radius: 30px; background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .search-input:focus { border-color: var(--accent); }
+        
+        .surprise-btn { background-color: var(--accent); color: white; border: none; padding: 16px 24px; border-radius: 30px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4); white-space: nowrap; }
+        .surprise-btn:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6); }
+        
         .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
         .filter-btn { background-color: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.9rem; transition: all 0.3s ease; }
         .filter-btn:hover { background-color: rgba(255, 255, 255, 0.1); color: var(--text-main); }
@@ -190,6 +195,10 @@
             .nav-links.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
             .nav-link { display: block; width: 100%; text-align: center; padding: 10px 0; }
             .social-btn { justify-content: center; width: 100%; padding: 10px 0; }
+            
+            /* Stack search and surprise button on mobile */
+            .search-row { flex-direction: column; }
+            .surprise-btn { justify-content: center; }
         }
     </style>
 </head>
@@ -276,9 +285,14 @@
     </section>
 
     <section class="controls-container">
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search for a movie title...">
+        <div class="search-row">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for a movie title...">
+            </div>
+            <button id="surprise-btn" class="surprise-btn">
+                <i class="fa-solid fa-shuffle"></i> Surprise Me!
+            </button>
         </div>
         <div class="filters" id="filterContainer">
             <button class="filter-btn active" data-filter="all">All</button>
@@ -527,6 +541,9 @@
           measurementId: "G-7PYNRBP33W"
         };
 
+        // NEW: Global array to hold movies for the "Surprise Me" button
+        window.allMoviesData = [];
+
         try {
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
@@ -559,11 +576,33 @@
                 }
             });
 
+            // --- SURPRISE ME LOGIC ---
+            const surpriseBtn = document.getElementById('surprise-btn');
+            if(surpriseBtn) {
+                surpriseBtn.addEventListener('click', () => {
+                    if(window.allMoviesData && window.allMoviesData.length > 0) {
+                        // Pick a random movie from the database array
+                        const randomIndex = Math.floor(Math.random() * window.allMoviesData.length);
+                        const randomMovie = window.allMoviesData[randomIndex];
+                        
+                        // Open its trailer automatically
+                        if(randomMovie.trailer) {
+                            window.openTrailer(randomMovie.trailer);
+                        } else {
+                            alert("Oops! This scene doesn't have a trailer link yet.");
+                        }
+                    } else {
+                        alert("Hold on, the movies are still loading!");
+                    }
+                });
+            }
+
             // --- LIVE DATABASE LOGIC (WITH CATEGORIES) ---
             const q = query(collection(db, "movies"), orderBy("dateAdded", "desc"));
             
             onSnapshot(q, (snapshot) => {
-                // 1. Clear all grids first and hide the sections
+                // Clear out our global array and grids before repopulating
+                window.allMoviesData = [];
                 const categories = ['action', 'thriller', 'drama', 'horror', 'comedy', 'rom-com'];
                 categories.forEach(cat => {
                     const grid = document.getElementById(`grid-${cat}`);
@@ -572,9 +611,11 @@
                     if(section) section.style.display = "none"; 
                 });
 
-                // 2. Loop through movies and put them in their specific grids
+                // Loop through movies and put them in their specific grids
                 snapshot.forEach((doc) => {
                     const movie = doc.data();
+                    window.allMoviesData.push(movie); // Save it for the Surprise button
+                    
                     const card = document.createElement('article');
                     card.className = 'card';
                     card.setAttribute('data-genres', movie.review || ''); 
@@ -622,4 +663,4 @@
         }
     </script>
 </body>
-</html>
+</html>  
