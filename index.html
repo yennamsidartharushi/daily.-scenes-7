@@ -136,6 +136,7 @@
         .btn { flex: 1; min-width: 120px; padding: 10px; border-radius: 8px; text-align: center; text-decoration: none; color: white; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: filter 0.2s ease, transform 0.2s ease; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
         .btn:hover { filter: brightness(1.2); transform: scale(1.05); }
         .btn-trailer { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-share { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); flex: 0.5; }
         .btn-hotstar { background: linear-gradient(135deg, #032cfc, #1a4fff); }
         .btn-aha { background: linear-gradient(135deg, #ff6600, #ff8533); }
         .btn-netflix { background: linear-gradient(135deg, #E50914, #ff2c37); }
@@ -482,6 +483,35 @@
                 }
             });
 
+            // --- Web Share API Logic ---
+            document.body.addEventListener('click', async (e) => {
+                const shareBtn = e.target.closest('.btn-share');
+                if (shareBtn) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const movieTitle = shareBtn.getAttribute('data-title');
+                    const shareData = {
+                        title: `daily.scenes7 | ${movieTitle}`,
+                        text: `Check out the best scenes from ${movieTitle} and find out where to stream it! 🎬`,
+                        url: window.location.href // This links back to your site
+                    };
+
+                    try {
+                        // Check if the browser supports native sharing (most mobile phones do)
+                        if (navigator.share) {
+                            await navigator.share(shareData);
+                        } else {
+                            // Fallback for desktop browsers that don't support native sharing
+                            await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+                            alert("Link copied to clipboard! You can now paste it anywhere.");
+                        }
+                    } catch (err) {
+                        console.log('Error sharing:', err);
+                    }
+                }
+            });
+
             const trailerModal = document.getElementById('trailerModal');
             const closeBtn = document.getElementById('closeModal');
 
@@ -541,7 +571,7 @@
           measurementId: "G-7PYNRBP33W"
         };
 
-        // NEW: Global array to hold movies for the "Surprise Me" button
+        // Global array to hold movies for the "Surprise Me" button
         window.allMoviesData = [];
 
         try {
@@ -635,6 +665,9 @@
                             <h2 class="title">${movie.title}</h2>
                             <div class="actions">
                                 <button class="btn btn-trailer" data-trailer="${movie.trailer}"><i class="fa-solid fa-film"></i> Watch Clip</button>
+                                
+                                <button class="btn btn-share" data-title="${movie.title}"><i class="fa-solid fa-share-nodes"></i></button>
+                                
                                 ${platformLinks}
                             </div>
                         </div>
@@ -663,4 +696,4 @@
         }
     </script>
 </body>
-</html>  
+</html>
