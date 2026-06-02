@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,7 @@
             --text-main: #ffffff;
             --text-muted: #a0a0a0;
             --accent: #e50914; 
+            --accent-hover: #ff2c37;
             --glass: rgba(10, 10, 10, 0.7);
             --border: rgba(255, 255, 255, 0.05);
         }
@@ -98,7 +99,7 @@
         .brand-logo.hotstar { height: 50px; } 
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- Search & Filter Bar (UPDATED for Surprise Me) --- */
+        /* --- Search & Filter Bar --- */
         .controls-container { max-width: 900px; margin: 0 auto 50px auto; padding: 0 5%; }
         .search-row { display: flex; gap: 15px; margin-bottom: 20px; }
         .search-box { position: relative; flex: 1; }
@@ -137,10 +138,24 @@
         .btn:hover { filter: brightness(1.2); transform: scale(1.05); }
         .btn-trailer { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
         .btn-share { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); flex: 0.5; }
+        .btn-like { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); flex: 0.5; color: white; transition: all 0.3s ease; }
+        .btn-like.liked { color: var(--accent); border-color: rgba(229, 9, 20, 0.5); }
         .btn-hotstar { background: linear-gradient(135deg, #032cfc, #1a4fff); }
         .btn-aha { background: linear-gradient(135deg, #ff6600, #ff8533); }
         .btn-netflix { background: linear-gradient(135deg, #E50914, #ff2c37); }
         .btn-prime { background: linear-gradient(135deg, #00A8E1, #33bfff); }
+
+        /* --- Newsletter Section --- */
+        .newsletter-section { padding: 60px 5%; display: flex; justify-content: center; margin-bottom: 20px; }
+        .newsletter-box { background: linear-gradient(145deg, #16161a 0%, #0d0d0f 100%); border: 1px solid var(--border); border-radius: 24px; padding: 50px; text-align: center; max-width: 800px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .newsletter-box h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; color: #fff; }
+        .newsletter-box p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px; }
+        .newsletter-form { display: flex; gap: 15px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; }
+        .newsletter-form input { flex: 1; min-width: 200px; padding: 15px 20px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: white; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s; }
+        .newsletter-form input:focus { border-color: var(--accent); }
+        .newsletter-form button { background: var(--accent); color: white; border: none; padding: 15px 25px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; white-space: nowrap; font-family: 'Inter', sans-serif; }
+        .newsletter-form button:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4); }
+        .newsletter-form button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* --- Modal Styles --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -197,9 +212,10 @@
             .nav-link { display: block; width: 100%; text-align: center; padding: 10px 0; }
             .social-btn { justify-content: center; width: 100%; padding: 10px 0; }
             
-            /* Stack search and surprise button on mobile */
             .search-row { flex-direction: column; }
             .surprise-btn { justify-content: center; }
+            .newsletter-box { padding: 30px 20px; }
+            .newsletter-form input, .newsletter-form button { width: 100%; }
         }
     </style>
 </head>
@@ -339,6 +355,17 @@
         </div>
 
     </div>
+
+    <section class="newsletter-section">
+        <div class="newsletter-box">
+            <h2>Don't Rely on the Algorithm.</h2>
+            <p>Get our top 3 hidden cinematic gems emailed to you every Friday. No spam, just pure cinema.</p>
+            <form id="newsletterForm" class="newsletter-form">
+                <input type="email" id="newsletterEmail" placeholder="Enter your email address..." required>
+                <button type="submit" class="btn-submit">Subscribe <i class="fa-solid fa-envelope"></i></button>
+            </form>
+        </div>
+    </section>
 
     <div class="modal-overlay" id="trailerModal">
         <div class="modal-content">
@@ -498,11 +525,9 @@
                     };
 
                     try {
-                        // Check if the browser supports native sharing (most mobile phones do)
                         if (navigator.share) {
                             await navigator.share(shareData);
                         } else {
-                            // Fallback for desktop browsers that don't support native sharing
                             await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
                             alert("Link copied to clipboard! You can now paste it anywhere.");
                         }
@@ -558,7 +583,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc, arrayUnion, arrayRemove, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         // !!! YOUR REAL FIREBASE KEYS !!!
         const firebaseConfig = {
@@ -571,7 +596,6 @@
           measurementId: "G-7PYNRBP33W"
         };
 
-        // Global array to hold movies for the "Surprise Me" button
         window.allMoviesData = [];
 
         try {
@@ -611,11 +635,8 @@
             if(surpriseBtn) {
                 surpriseBtn.addEventListener('click', () => {
                     if(window.allMoviesData && window.allMoviesData.length > 0) {
-                        // Pick a random movie from the database array
                         const randomIndex = Math.floor(Math.random() * window.allMoviesData.length);
                         const randomMovie = window.allMoviesData[randomIndex];
-                        
-                        // Open its trailer automatically
                         if(randomMovie.trailer) {
                             window.openTrailer(randomMovie.trailer);
                         } else {
@@ -627,11 +648,10 @@
                 });
             }
 
-            // --- LIVE DATABASE LOGIC (WITH CATEGORIES) ---
+            // --- LIVE DATABASE LOGIC (WITH CATEGORIES & LIKES) ---
             const q = query(collection(db, "movies"), orderBy("dateAdded", "desc"));
             
             onSnapshot(q, (snapshot) => {
-                // Clear out our global array and grids before repopulating
                 window.allMoviesData = [];
                 const categories = ['action', 'thriller', 'drama', 'horror', 'comedy', 'rom-com'];
                 categories.forEach(cat => {
@@ -641,10 +661,10 @@
                     if(section) section.style.display = "none"; 
                 });
 
-                // Loop through movies and put them in their specific grids
-                snapshot.forEach((doc) => {
-                    const movie = doc.data();
-                    window.allMoviesData.push(movie); // Save it for the Surprise button
+                snapshot.forEach((docSnap) => {
+                    const movie = docSnap.data();
+                    const docId = docSnap.id;
+                    window.allMoviesData.push(movie); 
                     
                     const card = document.createElement('article');
                     card.className = 'card';
@@ -658,22 +678,32 @@
                         if(movie.platforms.aha) platformLinks += `<a href="https://www.aha.video" target="_blank" class="btn btn-aha"><i class="fa-solid fa-play"></i> Aha</a>`;
                     }
 
+                    // Setup Like Status
+                    let likeCount = movie.likes ? movie.likes.length : 0;
+                    let isLikedClass = '';
+                    let heartIconClass = 'fa-regular';
+                    
+                    if (auth.currentUser && movie.likes && movie.likes.includes(auth.currentUser.uid)) {
+                        isLikedClass = 'liked';
+                        heartIconClass = 'fa-solid';
+                    }
+
                     card.innerHTML = `
                         <img src="${movie.poster}" class="card-img" alt="${movie.title}">
                         <div class="card-overlay">
                             <div class="tags"><span class="tag">${movie.cast || 'Cinema'}</span></div>
                             <h2 class="title">${movie.title}</h2>
                             <div class="actions">
-                                <button class="btn btn-trailer" data-trailer="${movie.trailer}"><i class="fa-solid fa-film"></i> Watch Clip</button>
-                                
+                                <button class="btn btn-trailer" data-trailer="${movie.trailer}"><i class="fa-solid fa-film"></i></button>
                                 <button class="btn btn-share" data-title="${movie.title}"><i class="fa-solid fa-share-nodes"></i></button>
-                                
+                                <button class="btn btn-like ${isLikedClass}" data-id="${docId}">
+                                    <i class="${heartIconClass} fa-heart"></i> ${likeCount > 0 ? `<span style="margin-left:5px;">${likeCount}</span>` : ''}
+                                </button>
                                 ${platformLinks}
                             </div>
                         </div>
                     `;
                     
-                    // Match the movie to its category grid! (Fallback to drama if empty)
                     const categoryCode = movie.category || 'drama'; 
                     const targetGrid = document.getElementById(`grid-${categoryCode}`);
                     const targetSection = document.getElementById(`section-${categoryCode}`);
@@ -684,12 +714,86 @@
                     }
                 });
                 
-                // Re-trigger the filter so the top buttons still work perfectly
                 if(typeof window.filterMovies === 'function') window.filterMovies();
                 
             }, (error) => {
                 console.log("Firebase error:", error.message);
             });
+
+            // --- LIKE BUTTON EVENT LISTENER ---
+            document.body.addEventListener('click', async (e) => {
+                const likeBtn = e.target.closest('.btn-like');
+                if (likeBtn) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const user = auth.currentUser;
+                    if (!user) {
+                        document.getElementById('authModal').classList.add('active');
+                        return;
+                    }
+
+                    const docId = likeBtn.getAttribute('data-id');
+                    const movieRef = doc(db, "movies", docId);
+                    const isLiked = likeBtn.classList.contains('liked');
+
+                    try {
+                        if (isLiked) {
+                            likeBtn.classList.remove('liked');
+                            likeBtn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
+                            await updateDoc(movieRef, {
+                                likes: arrayRemove(user.uid)
+                            });
+                        } else {
+                            likeBtn.classList.add('liked');
+                            likeBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
+                            await updateDoc(movieRef, {
+                                likes: arrayUnion(user.uid)
+                            });
+                        }
+                    } catch (err) {
+                        console.error("Error updating like:", err);
+                        alert("Failed to update like. Are your Firebase rules set correctly to allow updates?");
+                    }
+                }
+            });
+
+            // --- NEWSLETTER SUBMISSION LOGIC ---
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const emailInput = document.getElementById('newsletterEmail');
+                    const btn = newsletterForm.querySelector('button');
+                    const originalText = btn.innerHTML;
+
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                    btn.disabled = true;
+
+                    try {
+                        await addDoc(collection(db, "subscribers"), {
+                            email: emailInput.value,
+                            subscribedAt: new Date().toISOString()
+                        });
+                        
+                        btn.innerHTML = 'Subscribed! <i class="fa-solid fa-check"></i>';
+                        btn.style.background = "#00C853";
+                        emailInput.value = "";
+                        
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = "var(--accent)";
+                            btn.disabled = false;
+                        }, 3000);
+                        
+                    } catch (error) {
+                        console.error("Error subscribing: ", error);
+                        alert("Oops! Something went wrong. Check your Firebase Rules.");
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+            }
 
         } catch(e) {
             console.log("Waiting for actual Firebase config keys...");
