@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -214,7 +214,7 @@
 
         <section id="view-discover" class="view-section">
             <div class="table-header" style="background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                <h3>🎬 Discover Database</h3>
+                <h3>🎬 Discover Indian Cinema</h3>
                 <button class="btn-primary" onclick="fetchTrendingMovies()"><i class="fa-solid fa-shuffle"></i> Load Random Mix</button>
             </div>
             <div class="discover-grid" id="trendingGrid">
@@ -278,7 +278,7 @@
 
                         <div class="form-group">
                             <label>Lead Cast (Optional)</label>
-                            <input type="text" id="leadCast" placeholder="e.g. Leonardo DiCaprio">
+                            <input type="text" id="leadCast" placeholder="e.g. Allu Arjun">
                         </div>
                         
                         <div class="form-group">
@@ -388,13 +388,18 @@
         const ADMIN_EMAIL = "yennamyennamsidhu@gmail.com";
         window.subscriberEmails = [];
 
-        // --- NEW OMDb DISCOVER API LOGIC ---
+        // --- NEW OMDb DISCOVER API LOGIC (INDIAN CINEMA FOCUS) ---
         window.fetchTrendingMovies = async function() {
             const grid = document.getElementById('trendingGrid');
-            grid.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px; grid-column: 1 / -1;"><i class="fa-solid fa-spinner fa-spin"></i> Fetching popular movies...</p>';
+            grid.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px; grid-column: 1 / -1;"><i class="fa-solid fa-spinner fa-spin"></i> Fetching Indian blockbusters...</p>';
             
-            // Random popular keywords to generate a fresh mix of movies every time you click
-            const popularTerms = ["avengers", "batman", "love", "dark", "spider", "man", "john", "fast", "matrix", "interstellar", "joker", "harry"];
+            // Replaced generic terms with top Indian franchises and regional hits!
+            const popularTerms = [
+                "pushpa", "baahubali", "kgf", "salaar", "vikram", 
+                "rrr", "jawan", "pathaan", "leo", "kalki", 
+                "maharaja", "devara", "hanuman", "animal", "jailer",
+                "kantara", "master", "sita ramam", "dasara", "bhagavanth"
+            ];
             const randomTerm = popularTerms[Math.floor(Math.random() * popularTerms.length)];
 
             try {
@@ -743,4 +748,4 @@
         });
     </script>
 </body>
-</html>   
+</html>
