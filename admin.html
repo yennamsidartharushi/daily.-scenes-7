@@ -122,7 +122,7 @@
         label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
         input, select, textarea { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: white; padding: 14px 16px; border-radius: 8px; font-family: 'Inter'; font-size: 1rem; transition: all 0.3s; outline: none; }
         input:focus, textarea:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
-        .checkbox-group { display: flex; gap: 20px; margin-top: 10px; }
+        .checkbox-group { display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap; }
         .checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; color: white; }
 
         /* --- Premium Auth Modal --- */
@@ -293,20 +293,31 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label>Poster Image URL</label>
-                            <input type="url" id="posterUrl" placeholder="https://..." required>
+                        <div class="form-group full-width">
+                            <label>Horizontal Poster URL (For Best Results)</label>
+                            <input type="url" id="posterUrl" placeholder="Paste a high-quality horizontal image link here..." required>
+                            <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">
+                                <i class="fa-solid fa-circle-info"></i> OMDb only provides vertical posters. If you want a cinematic horizontal look, find a wallpaper on Google Images, copy the image address, and paste it here.
+                            </small>
                         </div>
+
                         <div class="form-group full-width">
                             <label>Short Review / Synopsis (For the Card & Search)</label>
                             <textarea id="shortReview" placeholder="e.g. A mind-bending heist..." required></textarea>
                         </div>
+                        
                         <div class="form-group full-width">
                             <label>YouTube Embed Trailer URL (Auto-converts normal links!)</label>
-                            <input type="url" id="trailerUrl" placeholder="https://youtu.be/..." required>
+                            <div style="display: flex; gap: 15px;">
+                                <input type="url" id="trailerUrl" placeholder="https://youtu.be/..." required style="flex: 1;">
+                                <button type="button" id="searchYtBtn" class="btn-primary" style="padding: 0 20px; background: #282828;">
+                                    <i class="fa-brands fa-youtube" style="color: #ff0000;"></i> Find Trailer
+                                </button>
+                            </div>
                         </div>
+
                         <div class="form-group full-width">
-                            <label>Available Platforms</label>
+                            <label>Available Platforms (Select all that apply)</label>
                             <div class="checkbox-group">
                                 <label class="checkbox-label"><input type="checkbox" id="platNetflix"> Netflix</label>
                                 <label class="checkbox-label"><input type="checkbox" id="platPrime"> Prime Video</label>
@@ -388,12 +399,22 @@
         const ADMIN_EMAIL = "yennamyennamsidhu@gmail.com";
         window.subscriberEmails = [];
 
+        // --- YOUTUBE SEARCH SHORTCUT ---
+        document.getElementById('searchYtBtn').addEventListener('click', () => {
+            const movieTitle = document.getElementById('movieTitle').value;
+            if (!movieTitle) {
+                alert("Please enter a movie title first!");
+                return;
+            }
+            const searchQuery = encodeURIComponent(movieTitle + " official trailer");
+            window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
+        });
+
         // --- NEW OMDb DISCOVER API LOGIC (INDIAN CINEMA FOCUS) ---
         window.fetchTrendingMovies = async function() {
             const grid = document.getElementById('trendingGrid');
             grid.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px; grid-column: 1 / -1;"><i class="fa-solid fa-spinner fa-spin"></i> Fetching Indian blockbusters...</p>';
             
-            // Replaced generic terms with top Indian franchises and regional hits!
             const popularTerms = [
                 "pushpa", "baahubali", "kgf", "salaar", "vikram", 
                 "rrr", "jawan", "pathaan", "leo", "kalki", 
@@ -403,14 +424,12 @@
             const randomTerm = popularTerms[Math.floor(Math.random() * popularTerms.length)];
 
             try {
-                // Using the OMDb API key we already know works!
                 const response = await fetch(`https://www.omdbapi.com/?s=${randomTerm}&type=movie&apikey=${OMDB_API_KEY}`);
                 const data = await response.json();
                 
                 if (data.Response === "True") {
                     grid.innerHTML = '';
                     data.Search.forEach(movie => {
-                        // Skip if it doesn't have a poster
                         if(!movie.Poster || movie.Poster === "N/A") return; 
 
                         const safeTitle = movie.Title ? movie.Title.replace(/'/g, "&apos;").replace(/"/g, "&quot;") : '';
@@ -438,7 +457,6 @@
 
         // --- IMPORT BUTTON LOGIC ---
         window.importFromOMDb = function(imdbID) {
-            // Switch tabs visually to "Add New Reel"
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             document.querySelectorAll('.nav-menu .nav-link')[2].classList.add('active'); 
             
@@ -446,16 +464,12 @@
             document.getElementById('view-add-movie').classList.add('active');
             document.getElementById('topbar-title').innerText = 'Publish New Reel';
             
-            // Put the IMDb ID into the input field
             document.getElementById('movieTitle').value = imdbID;
             
-            // Scroll to top
             document.querySelector('.main-content').scrollTop = 0;
-            
-            // Automatically click your existing "Auto-Fill" button!
             document.getElementById('fetchMovieBtn').click();
             
-            alert("Importing details! Just paste your YouTube trailer URL and hit Publish.");
+            alert("Importing details! If you want a horizontal poster, remember to paste a new Google Images link in the Poster URL box.");
         };
 
 
