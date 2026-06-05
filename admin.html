@@ -294,7 +294,7 @@
                         </div>
 
                         <div class="form-group full-width">
-                            <label>Horizontal Poster URL</label>
+                            <label>Vertical Poster URL</label>
                             <div style="display: flex; gap: 15px;">
                                 <input type="url" id="posterUrl" placeholder="https://..." required style="flex: 1;">
                                 <button type="button" id="searchPosterBtn" class="btn-primary" style="padding: 0 20px; background: #282828;">
@@ -302,7 +302,7 @@
                                 </button>
                             </div>
                             <small style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">
-                                <i class="fa-solid fa-circle-info"></i> OMDb provides vertical posters. Click "Find Poster" to search Google for a high-quality horizontal wallpaper, copy the image address, and paste it here.
+                                <i class="fa-solid fa-circle-info"></i> OMDb auto-fills a vertical poster. Click "Find Poster" to search Google if you need a higher quality version.
                             </small>
                         </div>
 
@@ -404,14 +404,14 @@
         const ADMIN_EMAIL = "yennamyennamsidhu@gmail.com";
         window.subscriberEmails = [];
 
-        // --- GOOGLE IMAGE SEARCH SHORTCUT FOR POSTER ---
+        // --- GOOGLE IMAGE SEARCH SHORTCUT FOR POSTER (VERTICAL) ---
         document.getElementById('searchPosterBtn').addEventListener('click', () => {
             const movieTitle = document.getElementById('movieTitle').value;
             if (!movieTitle) {
                 alert("Please enter a movie title first!");
                 return;
             }
-            const searchQuery = encodeURIComponent(movieTitle + " movie desktop wallpaper horizontal");
+            const searchQuery = encodeURIComponent(movieTitle + " high quality official movie poster vertical");
             window.open(`https://www.google.com/search?tbm=isch&q=${searchQuery}`, '_blank');
         });
 
@@ -485,7 +485,7 @@
             document.querySelector('.main-content').scrollTop = 0;
             document.getElementById('fetchMovieBtn').click();
             
-            alert("Importing details! Use the 'Find Poster' and 'Find Trailer' buttons to finish your setup.");
+            alert("Importing details! Just use the 'Find Trailer' button to add your YouTube link, then hit Publish.");
         };
 
 
@@ -732,18 +732,8 @@
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Saving to Database...";
             btn.style.opacity = "0.7";
-            btn.disabled = true;
 
             try {
-                let finalPosterUrl = document.getElementById('posterUrl').value;
-                if (!finalPosterUrl) {
-                    alert("Please provide a Poster URL.");
-                    btn.disabled = false;
-                    btn.innerText = "Publish to Site";
-                    btn.style.opacity = "1";
-                    return;
-                }
-
                 let rawTrailer = document.getElementById('trailerUrl').value;
                 let embedUrl = rawTrailer;
                 if (rawTrailer.includes("youtu.be/")) {
@@ -767,7 +757,7 @@
                     cast: document.getElementById('leadCast').value,
                     category: document.getElementById('movieCategory').value,
                     review: document.getElementById('shortReview').value,
-                    poster: finalPosterUrl,
+                    poster: document.getElementById('posterUrl').value,
                     trailer: embedUrl,
                     platforms: platforms,
                     dateAdded: new Date().toISOString(),
@@ -780,11 +770,10 @@
 
             } catch (error) {
                 console.error("Error adding document: ", error);
-                alert("Error saving to database. Check your Firebase Rules or Console.");
+                alert("Error saving to database. Check console.");
             } finally {
                 btn.innerHTML = 'Publish to Site <i class="fa-solid fa-cloud-arrow-up"></i>';
                 btn.style.opacity = "1";
-                btn.disabled = false;
             }
         });
     </script>
