@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -115,30 +115,68 @@
         .filter-btn:hover { background-color: rgba(255, 255, 255, 0.1); color: var(--text-main); }
         .filter-btn.active { background-color: var(--accent); color: white; border-color: var(--accent); }
 
-        /* --- Category Sections & Movie Grids --- */
-        .category-section { display: none; margin-bottom: 30px; } /* Hidden if empty */
+        /* --- Category Sections & Movie Grids (UPDATED FOR VERTICAL / HORIZONTAL SCROLL) --- */
+        .category-section { display: none; margin-bottom: 50px; } /* Hidden if empty */
         .category-header { padding: 0 5%; margin: 40px auto 20px; max-width: 1400px; font-size: 1.5rem; font-family: 'Poppins', sans-serif; font-weight: 700; border-left: 5px solid var(--accent); padding-left: 15px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; padding: 0 5% 40px; max-width: 1400px; margin: 0 auto; }
-        .card { position: relative; border-radius: 16px; overflow: hidden; background-color: var(--bg-card); aspect-ratio: 16 / 9; cursor: pointer; border: 1px solid var(--border); transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        /* The Netflix-style horizontal scroll container */
+        .grid { 
+            display: flex; 
+            flex-wrap: nowrap; 
+            overflow-x: auto; 
+            gap: 20px; 
+            padding: 10px 5% 40px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        
+        /* Custom styling for the horizontal scrollbar */
+        .grid::-webkit-scrollbar { height: 8px; }
+        .grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); border-radius: 10px; }
+        .grid::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .grid::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* Vertical Poster Cards */
+        .card { 
+            flex: 0 0 auto; /* Prevents cards from shrinking */
+            width: 260px; /* Standard vertical width */
+            position: relative; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            background-color: var(--bg-card); 
+            aspect-ratio: 2 / 3; /* Vertical Poster Ratio */
+            cursor: pointer; 
+            border: 1px solid var(--border); 
+            transition: transform 0.4s ease, box-shadow 0.4s ease; 
+        }
         .card.hidden { display: none !important; }
         .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.8); z-index: 10; }
         .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
         .card:hover .card-img { transform: scale(1.1); }
-        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; transition: background 0.4s ease; }
-        .tags { display: flex; gap: 8px; margin-bottom: 10px; }
-        .tag { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(5px); padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
-        .title { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
-        .cast { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
+        
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; transition: background 0.4s ease; }
+        .tags { display: flex; gap: 8px; margin-bottom: 8px; }
+        .tag { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(5px); padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
+        .title { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
+        .cast { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
 
-        /* --- Buttons --- */
-        .actions { display: flex; flex-wrap: wrap; gap: 10px; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
+        /* --- Updated Buttons for Vertical Cards --- */
+        .actions { display: flex; flex-wrap: wrap; gap: 8px; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
         .card:hover .actions { opacity: 1; transform: translateY(0); }
-        .btn { flex: 1; min-width: 120px; padding: 10px; border-radius: 8px; text-align: center; text-decoration: none; color: white; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: filter 0.2s ease, transform 0.2s ease; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+        
+        .btn { padding: 8px; border-radius: 8px; text-align: center; text-decoration: none; color: white; font-weight: 600; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 6px; transition: filter 0.2s ease, transform 0.2s ease; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
         .btn:hover { filter: brightness(1.2); transform: scale(1.05); }
+        
+        /* Force Trailer and Platform buttons to span full width */
+        .btn-trailer, .btn-netflix, .btn-prime, .btn-hotstar, .btn-aha { flex: 1; min-width: 100%; }
+        /* Share and Like sit side-by-side */
+        .btn-share, .btn-like { flex: 1; min-width: 45%; }
+        
         .btn-trailer { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
-        .btn-share { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); flex: 0.5; }
-        .btn-like { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); flex: 0.5; color: white; transition: all 0.3s ease; }
+        .btn-share { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-like { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; transition: all 0.3s ease; }
         .btn-like.liked { color: var(--accent); border-color: rgba(229, 9, 20, 0.5); }
         .btn-hotstar { background: linear-gradient(135deg, #032cfc, #1a4fff); }
         .btn-aha { background: linear-gradient(135deg, #ff6600, #ff8533); }
@@ -195,9 +233,8 @@
         /* --- Mobile Adjustments & Glass Menu --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .grid { grid-template-columns: 1fr; }
-            .actions { opacity: 1; transform: translateY(0); }
-            .card { aspect-ratio: 4/3; }
+            .card { width: 180px; } /* Slightly smaller cards on mobile */
+            .title { font-size: 1.2rem; }
             .marquee-wrapper::before, .marquee-wrapper::after { width: 50px; } 
             
             .mobile-menu-btn { display: block; }
@@ -694,7 +731,7 @@
                             <div class="tags"><span class="tag">${movie.cast || 'Cinema'}</span></div>
                             <h2 class="title">${movie.title}</h2>
                             <div class="actions">
-                                <button class="btn btn-trailer" data-trailer="${movie.trailer}"><i class="fa-solid fa-film"></i></button>
+                                <button class="btn btn-trailer" data-trailer="${movie.trailer}"><i class="fa-solid fa-film"></i> Watch Clip</button>
                                 <button class="btn btn-share" data-title="${movie.title}"><i class="fa-solid fa-share-nodes"></i></button>
                                 <button class="btn btn-like ${isLikedClass}" data-id="${docId}">
                                     <i class="${heartIconClass} fa-heart"></i> ${likeCount > 0 ? `<span style="margin-left:5px;">${likeCount}</span>` : ''}
@@ -800,4 +837,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
